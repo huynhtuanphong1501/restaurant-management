@@ -9,7 +9,7 @@ import { DATABASE_URL } from "../../common/constants/app.constant";
 export class PrismaService extends PrismaClient {
   constructor() {
       const url = new URL(DATABASE_URL as string);
-      console.log(url);
+    //   console.log(url);
       const adapter = new PrismaMariaDb({
             host: url.hostname,
             user: url.username,

@@ -12,21 +12,21 @@ export class TokenService {
         const decode = jwt.verify(token, JWT_REFRESH_SECRET, option);
         return decode;
      }
-    signAccessToken(id) {
+    signAccessToken(id: BigInt) {
         if (!id) { 
             throw new BadRequestException('id not found');
         }
-        const payload = { id: id };
+        const payload = { id: id.toString() };
         const token = jwt.sign(payload, JWT_SECRET_KEY as string, {
             expiresIn: '1h',
         })
         return token;
      }
-    signRefreshToken(id) {
+    signRefreshToken(id: BigInt) {
         if (!id) { 
             throw new BadRequestException('id not found');
         }
-        const payload = { id: id };
+        const payload = { id: id.toString() };
         const token = jwt.sign(payload, JWT_REFRESH_SECRET as string, {
             expiresIn: '1d',
         })

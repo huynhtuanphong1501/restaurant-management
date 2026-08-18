@@ -1,0 +1,14 @@
+services:
+  database:
+    container_name: mysql-res-dc
+    image: mysql:latest
+    environment:
+      - MySQL_ROOT_PASSWORD=${MySQL_ROOT_PASSWORD}
+    ports:
+      - 3306:3306
+  
+  redis:
+    container_name: redis-res-dc
+    image: redis:latest
+    ports:
+      - 6380:6379

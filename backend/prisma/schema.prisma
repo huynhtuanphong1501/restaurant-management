@@ -1,0 +1,310 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/module-system/prisma/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model categories {
+  id            BigInt            @id @default(autoincrement()) @db.UnsignedBigInt
+  restaurant_id BigInt            @db.UnsignedBigInt
+  name          String            @db.VarChar(100)
+  description   String?           @db.VarChar(255)
+  image         String?           @db.VarChar(500)
+  sort_order    Int               @default(0)
+  status        categories_status @default(ACTIVE)
+  created_at    DateTime          @default(now()) @db.DateTime(0)
+  updated_at    DateTime          @default(now()) @db.DateTime(0)
+  restaurants   restaurants       @relation(fields: [restaurant_id], references: [id], onDelete: Cascade, map: "categories_ibfk_1")
+  foods         foods[]
+
+  @@unique([restaurant_id, name], map: "uq_category_restaurant_name")
+  @@index([restaurant_id], map: "idx_categories_restaurant")
+}
+
+model foods {
+  id            BigInt        @id @default(autoincrement()) @db.UnsignedBigInt
+  restaurant_id BigInt        @db.UnsignedBigInt
+  category_id   BigInt        @db.UnsignedBigInt
+  name          String        @db.VarChar(150)
+  description   String?       @db.Text
+  price         Decimal       @db.Decimal(15, 2)
+  image         String?       @db.VarChar(500)
+  status        foods_status  @default(AVAILABLE)
+  sort_order    Int           @default(0)
+  created_at    DateTime      @default(now()) @db.DateTime(0)
+  updated_at    DateTime      @default(now()) @db.DateTime(0)
+  deleted_at    DateTime?     @db.DateTime(0)
+  restaurants   restaurants   @relation(fields: [restaurant_id], references: [id], onDelete: Cascade, map: "foods_ibfk_1")
+  categories    categories    @relation(fields: [category_id], references: [id], map: "foods_ibfk_2")
+  order_items   order_items[]
+
+  @@index([category_id], map: "idx_foods_category")
+  @@index([restaurant_id], map: "idx_foods_restaurant")
+  @@index([status], map: "idx_foods_status")
+}
+
+model invoices {
+  id                BigInt            @id @default(autoincrement()) @db.UnsignedBigInt
+  restaurant_id     BigInt            @db.UnsignedBigInt
+  table_id          BigInt            @db.UnsignedBigInt
+  invoice_code      String            @unique(map: "invoice_code") @db.VarChar(50)
+  subtotal          Decimal           @default(0.00) @db.Decimal(15, 2)
+  discount          Decimal           @default(0.00) @db.Decimal(15, 2)
+  tax               Decimal           @default(0.00) @db.Decimal(15, 2)
+  total             Decimal           @default(0.00) @db.Decimal(15, 2)
+  status            invoices_status   @default(OPEN)
+  opened_at         DateTime          @default(now()) @db.DateTime(0)
+  closed_at         DateTime?         @db.DateTime(0)
+  created_at        DateTime          @default(now()) @db.DateTime(0)
+  updated_at        DateTime          @default(now()) @db.DateTime(0)
+  restaurants       restaurants       @relation(fields: [restaurant_id], references: [id], onDelete: Cascade, map: "invoices_ibfk_1")
+  restaurant_tables restaurant_tables @relation(fields: [table_id], references: [id], map: "invoices_ibfk_2")
+  orders            orders[]
+  payments          payments[]
+
+  @@index([restaurant_id], map: "idx_invoices_restaurant")
+  @@index([status], map: "idx_invoices_status")
+  @@index([table_id], map: "idx_invoices_table")
+}
+
+model order_items {
+  id         BigInt             @id @default(autoincrement()) @db.UnsignedBigInt
+  order_id   BigInt             @db.UnsignedBigInt
+  food_id    BigInt             @db.UnsignedBigInt
+  food_name  String             @db.VarChar(150)
+  price      Decimal            @db.Decimal(15, 2)
+  quantity   Int                @default(1)
+  note       String?            @db.VarChar(500)
+  status     order_items_status @default(PENDING)
+  created_at DateTime           @default(now()) @db.DateTime(0)
+  updated_at DateTime           @default(now()) @db.DateTime(0)
+  orders     orders             @relation(fields: [order_id], references: [id], onDelete: Cascade, map: "order_items_ibfk_1")
+  foods      foods              @relation(fields: [food_id], references: [id], map: "order_items_ibfk_2")
+
+  @@index([food_id], map: "idx_order_items_food")
+  @@index([order_id], map: "idx_order_items_order")
+  @@index([status], map: "idx_order_items_status")
+}
+
+model orders {
+  id                BigInt            @id @default(autoincrement()) @db.UnsignedBigInt
+  restaurant_id     BigInt            @db.UnsignedBigInt
+  table_id          BigInt            @db.UnsignedBigInt
+  invoice_id        BigInt?           @db.UnsignedBigInt
+  order_code        String            @unique(map: "order_code") @db.VarChar(50)
+  note              String?           @db.Text
+  status            orders_status     @default(PENDING)
+  created_at        DateTime          @default(now()) @db.DateTime(0)
+  updated_at        DateTime          @default(now()) @db.DateTime(0)
+  order_items       order_items[]
+  restaurants       restaurants       @relation(fields: [restaurant_id], references: [id], onDelete: Cascade, map: "orders_ibfk_1")
+  restaurant_tables restaurant_tables @relation(fields: [table_id], references: [id], map: "orders_ibfk_2")
+  invoices          invoices?         @relation(fields: [invoice_id], references: [id], map: "orders_ibfk_3")
+
+  @@index([created_at], map: "idx_orders_created_at")
+  @@index([invoice_id], map: "idx_orders_invoice")
+  @@index([restaurant_id], map: "idx_orders_restaurant")
+  @@index([status], map: "idx_orders_status")
+  @@index([table_id], map: "idx_orders_table")
+}
+
+model payments {
+  id               BigInt          @id @default(autoincrement()) @db.UnsignedBigInt
+  invoice_id       BigInt          @db.UnsignedBigInt
+  amount           Decimal         @db.Decimal(15, 2)
+  method           payments_method
+  status           payments_status @default(PENDING)
+  transaction_code String?         @db.VarChar(100)
+  paid_at          DateTime?       @db.DateTime(0)
+  created_at       DateTime        @default(now()) @db.DateTime(0)
+  invoices         invoices        @relation(fields: [invoice_id], references: [id], map: "payments_ibfk_1")
+
+  @@index([invoice_id], map: "idx_payments_invoice")
+  @@index([status], map: "idx_payments_status")
+  @@index([transaction_code], map: "idx_payments_transaction")
+}
+
+model refresh_tokens {
+  id         BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  user_id    BigInt    @db.UnsignedBigInt
+  token_hash String    @db.VarChar(255)
+  expires_at DateTime  @db.DateTime(0)
+  revoked_at DateTime? @db.DateTime(0)
+  created_at DateTime  @default(now()) @db.DateTime(0)
+  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "refresh_tokens_ibfk_1")
+
+  @@index([expires_at], map: "idx_refresh_tokens_expires")
+  @@index([user_id], map: "idx_refresh_tokens_user")
+}
+
+model restaurant_members {
+  id            BigInt                    @id @default(autoincrement()) @db.UnsignedBigInt
+  restaurant_id BigInt                    @db.UnsignedBigInt
+  user_id       BigInt                    @db.UnsignedBigInt
+  role          restaurant_members_role   @default(WAITER)
+  status        restaurant_members_status @default(ACTIVE)
+  joined_at     DateTime                  @default(now()) @db.DateTime(0)
+  restaurants   restaurants               @relation(fields: [restaurant_id], references: [id], onDelete: Cascade, map: "restaurant_members_ibfk_1")
+  users         users                     @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "restaurant_members_ibfk_2")
+
+  @@unique([restaurant_id, user_id], map: "uq_restaurant_user")
+  @@index([restaurant_id], map: "idx_members_restaurant")
+  @@index([user_id], map: "idx_members_user")
+}
+
+model restaurant_tables {
+  id             BigInt                   @id @default(autoincrement()) @db.UnsignedBigInt
+  restaurant_id  BigInt                   @db.UnsignedBigInt
+  name           String                   @db.VarChar(50)
+  capacity       Int                      @default(2)
+  status         restaurant_tables_status @default(AVAILABLE)
+  created_at     DateTime                 @default(now()) @db.DateTime(0)
+  updated_at     DateTime                 @default(now()) @db.DateTime(0)
+  invoices       invoices[]
+  orders         orders[]
+  restaurants    restaurants              @relation(fields: [restaurant_id], references: [id], onDelete: Cascade, map: "restaurant_tables_ibfk_1")
+  table_qr_codes table_qr_codes[]
+
+  @@unique([restaurant_id, name], map: "uq_table_restaurant_name")
+  @@index([restaurant_id], map: "idx_tables_restaurant")
+  @@index([status], map: "idx_tables_status")
+}
+
+model restaurants {
+  id                 BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
+  owner_id           BigInt               @db.UnsignedBigInt
+  name               String               @db.VarChar(150)
+  description        String?              @db.Text
+  address            String?              @db.VarChar(255)
+  phone              String?              @db.VarChar(20)
+  logo               String?              @db.VarChar(500)
+  cover_image        String?              @db.VarChar(500)
+  status             restaurants_status   @default(ACTIVE)
+  created_at         DateTime             @default(now()) @db.DateTime(0)
+  updated_at         DateTime             @default(now()) @db.DateTime(0)
+  categories         categories[]
+  foods              foods[]
+  invoices           invoices[]
+  orders             orders[]
+  restaurant_members restaurant_members[]
+  restaurant_tables  restaurant_tables[]
+  users              users                @relation(fields: [owner_id], references: [id], map: "restaurants_ibfk_1")
+
+  @@index([owner_id], map: "idx_restaurants_owner")
+}
+
+model table_qr_codes {
+  id                BigInt            @id @default(autoincrement()) @db.UnsignedBigInt
+  table_id          BigInt            @db.UnsignedBigInt
+  token             String            @unique(map: "token") @db.VarChar(255)
+  is_active         Boolean           @default(true)
+  created_at        DateTime          @default(now()) @db.DateTime(0)
+  expires_at        DateTime?         @db.DateTime(0)
+  restaurant_tables restaurant_tables @relation(fields: [table_id], references: [id], onDelete: Cascade, map: "table_qr_codes_ibfk_1")
+
+  @@index([is_active], map: "idx_qr_active")
+  @@index([table_id], map: "idx_qr_table")
+  @@index([token], map: "idx_qr_token")
+}
+
+model users {
+  id                 BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
+  full_name          String               @db.VarChar(100)
+  email              String               @unique(map: "email") @db.VarChar(150)
+  password_hash      String               @db.VarChar(255)
+  phone              String?              @db.VarChar(20)
+  avatar             String?              @db.VarChar(500)
+  status             users_status         @default(ACTIVE)
+  created_at         DateTime             @default(now()) @db.DateTime(0)
+  updated_at         DateTime             @default(now()) @db.DateTime(0)
+  refresh_tokens     refresh_tokens[]
+  restaurant_members restaurant_members[]
+  restaurants        restaurants[]
+}
+
+enum payments_method {
+  CASH
+  CARD
+  MOMO
+  VNPAY
+  ZALOPAY
+}
+
+enum restaurant_members_role {
+  OWNER
+  ADMIN
+  MANAGER
+  KITCHEN
+  WAITER
+  CASHIER
+}
+
+enum payments_status {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum restaurant_members_status {
+  ACTIVE
+  INACTIVE
+}
+
+enum restaurant_tables_status {
+  AVAILABLE
+  OCCUPIED
+  RESERVED
+  INACTIVE
+}
+
+enum categories_status {
+  ACTIVE
+  INACTIVE
+}
+
+enum orders_status {
+  PENDING
+  CONFIRMED
+  COOKING
+  READY
+  SERVED
+  CANCELLED
+}
+
+enum users_status {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+enum foods_status {
+  AVAILABLE
+  UNAVAILABLE
+  SOLD_OUT
+}
+
+enum order_items_status {
+  PENDING
+  CONFIRMED
+  COOKING
+  READY
+  SERVED
+  CANCELLED
+}
+
+enum invoices_status {
+  OPEN
+  PAID
+  CANCELLED
+}
+
+enum restaurants_status {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}

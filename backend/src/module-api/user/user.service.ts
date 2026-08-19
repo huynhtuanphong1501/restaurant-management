@@ -48,6 +48,20 @@ export class UserService {
     if (!compare) {
       throw new BadRequestException('password error');
     }
+    
+    await this.prisma.refresh_tokens.updateMany({
+      where: {
+        user_id: check.id,
+        revoked_at: null,
+        expires_at: {
+          gt: new Date(),
+        },
+      },
+      data: {
+        revoked_at: new Date(),
+      },
+    });
+
     const accessToken = this.token.signAccessToken(check.id);
     const refreshToken = this.token.signRefreshToken(check.id);
 

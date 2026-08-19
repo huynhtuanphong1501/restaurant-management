@@ -110,6 +110,31 @@ export class UserService {
     return {
       accessToken,
     };
-  } 
+  }
+
+  async info(userId: string) {
+    const user = await this.prisma.users.findUnique({
+      where: {
+        id: BigInt(userId),
+      },
+      select: {
+        id: true,
+        full_name: true,
+        email: true,
+        phone: true,
+        avatar: true,
+        status: true,
+        created_at: true,
+        updated_at: true
+      }
+    });
+    if (!user) {
+      throw new BadRequestException('user not found');
+    }
+    return {
+      ...user,
+      id: user.id.toString()
+    };
+  }
 
 }

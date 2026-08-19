@@ -1,10 +1,11 @@
-import { Controller, Post, Body, Res, Req } from '@nestjs/common';
+import { Controller, Post, Body, Res, Req, Get } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Public } from 'src/common/decorators/public.decorator';
 import { RegisterDTO } from './dto/register.dto';
 import { LoginDTO } from './dto/login.dto';
 import type { CookieOptions, Request, Response } from 'express';
 import { NODE_ENV } from 'src/common/constants/app.constant';
+import { User } from 'src/common/decorators/user.decorator';
 
 const COOKIE_OPTIONS : CookieOptions = {
   httpOnly: true,
@@ -48,5 +49,14 @@ export class UserController {
       result: result,
       message: 'refresh token success'
     }  
+  }
+
+  @Get('info')
+  async info(@User() user) { 
+    const result = await this.userService.info(user.id);
+    return {
+      result: result,
+      message: 'get user info success'
+    }
   }
 }

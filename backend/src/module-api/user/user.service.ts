@@ -4,12 +4,16 @@ import { RegisterDTO } from './dto/register.dto';
 import bcrypt from 'bcrypt';
 import { LoginDTO } from './dto/login.dto';
 import { TokenService } from 'src/module-system/token/token.service';
-import { hash } from '../../common/helpers/hash.helper'
+import { hash, compareHash } from '../../common/helpers/hash.helper'
 import type { Request } from 'express';
+import { UpdateInfo } from './dto/update.dto';
+import { UpdatePassword } from './dto/updatePassword.dto';
+import { CloudinaryService } from 'src/module-system/cloudinary/cloudinary.service';
+
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService, private readonly token: TokenService) { }
+  constructor(private readonly prisma: PrismaService, private readonly token: TokenService, private readonly cloudinary: CloudinaryService) { }
   async register(dto: RegisterDTO) {
     const check = await this.prisma.users.findUnique({
       where: {
@@ -137,4 +141,119 @@ export class UserService {
     };
   }
 
+  async updateInfo(userId: string, dto: UpdateInfo) {
+    if (!userId) {
+      throw new BadRequestException('User id is empty');
+    }
+    const checkUserId = await this.prisma.users.findUnique({
+      where: {
+        id: BigInt(userId),
+      }
+    });
+    if (!checkUserId) {
+      throw new BadRequestException('user id not found');
+    }
+    const updateData = await this.prisma.users.update({
+      where: {
+        id: BigInt(userId),
+      },
+      data: {
+        full_name: dto.full_name,
+        phone: dto.phone,
+      },
+      select: {
+        id: true,
+        full_name: true,
+        email: true,
+        phone: true,
+        avatar: true,
+        status: true,
+        created_at: true,
+        updated_at: true
+      }
+    });
+
+    return {
+      ...updateData,
+      id: updateData.id.toString()
+    }
+  }
+
+  async updatePassword(userId: string, dto: UpdatePassword) {
+    if (!userId) {
+      throw new BadRequestException('User id is empty');
+    }
+    const checkUserId = await this.prisma.users.findUnique({
+      where: {
+        id: BigInt(userId),
+      }
+    });
+    if (!checkUserId) {
+      throw new BadRequestException('user id not found');
+    }
+    const compare = compareHash(dto.currentPassword, checkUserId.password_hash);
+    if (!compare) {
+      throw new BadRequestException('current password error');
+    }
+
+    const hashPassword = hash(dto.newPassword);
+    await this.prisma.users.update({
+      where: {
+        id: BigInt(userId)
+      },
+      data: {
+        password_hash: hashPassword,
+      }
+    });
+    await this.prisma.refresh_tokens.updateMany({
+      where: {
+        user_id: BigInt(userId),
+        revoked_at: null,
+      },
+      data: {
+        revoked_at: new Date(),
+      },
+    });
+
+    return true;
+  }
+
+  async uploadAvatar(userId: string, file: Express.Multer.File) {
+    if (!userId) {
+      throw new BadRequestException('User id is empty');
+    }
+    const checkUserId = await this.prisma.users.findUnique({
+      where: {
+        id: BigInt(userId),
+      }
+    });
+    if (!checkUserId) {
+      throw new BadRequestException('user id not found');
+    }
+
+    if (checkUserId.avatar) {
+      const url = `avatar/${checkUserId.avatar.split('/avatar/')[1].replace(/\.[^/.]+$/, '')}`;
+      console.log(url)
+      await this.cloudinary.delete(url);
+    }
+
+    const uploadResult = await this.cloudinary.upload(file,'avatar');
+
+    const result = await this.prisma.users.update({
+        where: {
+          id: BigInt(userId),
+        },
+        data: {
+          avatar: uploadResult.secure_url,
+        },
+        select: {
+          id: true,
+          avatar: true,
+        },
+      });
+    return {
+      ...result,
+      id: result.id.toString()
+    };
+  }
 }

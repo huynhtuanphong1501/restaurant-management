@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, Req, Get } from '@nestjs/common';
+import { Controller, Post, Body, Res, Req, Get, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Public } from 'src/common/decorators/public.decorator';
 import { RegisterDTO } from './dto/register.dto';
@@ -6,6 +6,10 @@ import { LoginDTO } from './dto/login.dto';
 import type { CookieOptions, Request, Response } from 'express';
 import { NODE_ENV } from 'src/common/constants/app.constant';
 import { User } from 'src/common/decorators/user.decorator';
+import { UpdateInfo } from './dto/update.dto';
+import { UpdatePassword } from './dto/updatePassword.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import multer from 'multer';
 
 const COOKIE_OPTIONS : CookieOptions = {
   httpOnly: true,
@@ -57,6 +61,34 @@ export class UserController {
     return {
       result: result,
       message: 'get user info success'
+    }
+  }
+
+  @Post('update-info')
+  async updateInfo(@User() user, @Body() dto: UpdateInfo) {
+    const result = await this.userService.updateInfo(user.id, dto);
+    return {
+      result: result,
+      message: 'update user info success'
+    }
+  }
+
+  @Post('update-password')
+  async updatePassword(@User() user, @Body() dto: UpdatePassword) {
+    const result = await this.userService.updatePassword(user.id, dto);
+    return {
+      result: result,
+      message: 'update new password success'
+    }
+  }
+
+  @Post('upload-avatar')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadAvatar(@UploadedFile() file: Express.Multer.File, @User() user) {
+    const result = await this.userService.uploadAvatar(user.id, file);
+    return {
+      result: result,
+      message: "upload avatar success"
     }
   }
 }

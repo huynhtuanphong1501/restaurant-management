@@ -8,9 +8,10 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { RespondInterceptor } from './common/interceptors/respond.interceptor';
 import { AuthGuard } from './common/guards/authentication.guard';
+import { CloudinaryModule } from './module-system/cloudinary/cloudinary.module';
 
 @Module({
-  imports: [PrismaModule, UserModule, TokenModule],
+  imports: [PrismaModule, UserModule, TokenModule, CloudinaryModule],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_GUARD,

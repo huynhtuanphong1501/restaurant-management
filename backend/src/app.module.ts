@@ -9,13 +9,18 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { RespondInterceptor } from './common/interceptors/respond.interceptor';
 import { AuthGuard } from './common/guards/authentication.guard';
 import { CloudinaryModule } from './module-system/cloudinary/cloudinary.module';
+import { RestaurantModule } from './module-api/restaurant/restaurant.module';
+import { RolesGuard } from './common/guards/role.guard';
 
 @Module({
-  imports: [PrismaModule, UserModule, TokenModule, CloudinaryModule],
+  imports: [PrismaModule, UserModule, TokenModule, CloudinaryModule, RestaurantModule],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_GUARD,
     useClass: AuthGuard
+  }, {
+    provide: APP_GUARD,
+    useClass: RolesGuard
   } ,{
     provide: APP_INTERCEPTOR,
     useClass: LoggingInterceptor

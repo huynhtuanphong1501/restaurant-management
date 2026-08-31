@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UploadedFiles } from '@nestjs/common';
 import { RestaurantService } from './restaurant.service';
 import { RestaurantCreate } from './dto/createRestaurant.dto';
 import { User } from 'src/common/decorators/user.decorator';
 import { Roles } from 'src/common/decorators/role.decorator';
 import { Role } from 'src/common/constants/enum.constant';
 import { RestaurantUpdate } from './dto/updateRestaurant.dto';
+import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('restaurant')
 export class RestaurantController {
@@ -26,6 +27,20 @@ export class RestaurantController {
     return {
       result: result,
       message: 'update restaurant success'
+    }
+  }
+
+  @Post('updateImage/:restaurantId')
+  @Roles(Role.OWNER, Role.ADMIN)
+  @UseInterceptors(FileFieldsInterceptor([
+  { name: 'logo', maxCount: 1 },
+  { name: 'cover_image', maxCount: 1 },
+]))
+  async updateRestaurantImage(@UploadedFiles() files: { logo?: Express.Multer.File[], cover_image?: Express.Multer.File[] }, @User() user, @Param('restaurantId') restaurantId: string,) {
+    const result = await this.restaurantService.updateRestaurantImage(files, user.id, restaurantId);
+    return {
+      result: result,
+      message: 'update restaurant image success'
     }
   }
 

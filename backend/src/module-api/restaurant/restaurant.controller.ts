@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UploadedFiles } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UploadedFiles, Query, Req } from '@nestjs/common';
 import { RestaurantService } from './restaurant.service';
 import { RestaurantCreate } from './dto/createRestaurant.dto';
 import { User } from 'src/common/decorators/user.decorator';
@@ -33,9 +33,9 @@ export class RestaurantController {
   @Post('updateImage/:restaurantId')
   @Roles(Role.OWNER, Role.ADMIN)
   @UseInterceptors(FileFieldsInterceptor([
-  { name: 'logo', maxCount: 1 },
-  { name: 'cover_image', maxCount: 1 },
-]))
+    { name: 'logo', maxCount: 1 },
+    { name: 'cover_image', maxCount: 1 },
+  ]))
   async updateRestaurantImage(@UploadedFiles() files: { logo?: Express.Multer.File[], cover_image?: Express.Multer.File[] }, @User() user, @Param('restaurantId') restaurantId: string,) {
     const result = await this.restaurantService.updateRestaurantImage(files, user.id, restaurantId);
     return {
@@ -44,6 +44,32 @@ export class RestaurantController {
     }
   }
 
+  @Get('listRestaurant')
+  async listRestaurant(@User() user, @Req() request: Request) {
+    const result = await this.restaurantService.listRestaurant(user.id, request);
+    return {
+      result: result,
+      message: 'list restaurant success'
+    }
+  }
 
+  @Get(':restaurantId')
+  @Roles(Role.OWNER, Role.ADMIN, Role.MANAGER, Role.KITCHEN, Role.WAITER, Role.CASHIER)
+  async getRestaurant(@Param('restaurantId') restaurantId: string) {
+    const result = await this.restaurantService.getRestaurant(restaurantId);
+    return {
+      result: result,
+      message: 'get restaurant success'
+    }
+  }
 
+  @Delete(':restaurantId')
+  @Roles(Role.OWNER)
+  async deleteRestaurant(@Param('restaurantId') restaurantId: string, @User() user) {
+    const result = await this.restaurantService.deleteRestaurant(restaurantId, user.id);
+    return {
+      result: result,
+      message: 'delete restaurant success'
+    }
+  }
 }

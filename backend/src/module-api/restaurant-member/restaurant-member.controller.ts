@@ -5,6 +5,7 @@ import { Role } from 'src/common/constants/enum.constant';
 import { AddMemberDto } from './dto/addMember.dto';
 import type { Request } from 'express';
 import { UpdateMemberDto } from './dto/updateMember.dto';
+import { DeleteMemberDTO } from './dto/deleteMember.dto';
 
 
 @Controller('restaurant')
@@ -47,6 +48,16 @@ export class RestaurantMemberController {
     return {
       result: result,
       message: 'update member success'
+    }
+  }
+
+  @Delete(':restaurantId/member/delete')
+  @Roles(Role.OWNER, Role.ADMIN)
+  async deleteMember(@Param('restaurantId') restaurantId: string, @Body() body: DeleteMemberDTO) {
+    const result = await this.restaurantMemberService.deleteMember(restaurantId, body);
+    return {
+      result: result,
+      message: 'delete member success'
     }
   }
 

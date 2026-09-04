@@ -5,6 +5,7 @@ import { AddMemberDto } from './dto/addMember.dto';
 import { paginate } from 'src/common/helpers/pagination.helper';
 import { Request } from 'express';
 import { UpdateMemberDto } from './dto/updateMember.dto';
+import { DeleteMemberDTO } from './dto/deleteMember.dto';
 
 
 @Injectable()
@@ -203,4 +204,40 @@ export class RestaurantMemberService {
       user_id: updatedMember.user_id.toString()
     };
   };
+
+  async deleteMember(restaurantId: string, body: DeleteMemberDTO) {
+    const res = await this.prisma.restaurants.findUnique({
+      where: {
+        id: BigInt(restaurantId)
+      }
+    });
+    if(!res) {
+      throw new BadRequestException('Restaurant not found');
+    }
+
+    const { user_id } = body;
+
+    const member = await this.prisma.restaurant_members.findFirst({
+      where: {
+        restaurant_id: BigInt(restaurantId),
+        user_id: BigInt(user_id)
+      }
+    });
+    if(!member) {
+      throw new BadRequestException('Member not found');
+    }
+
+    const deletedMember = await this.prisma.restaurant_members.delete({
+      where: {
+        id: member.id
+      }
+    });
+
+    return {
+      ...deletedMember,
+      id: deletedMember.id.toString(),
+      restaurant_id: deletedMember.restaurant_id.toString(),
+      user_id: deletedMember.user_id.toString()
+    };
+  }
 }

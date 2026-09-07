@@ -22,7 +22,7 @@ export class RolesGuard implements CanActivate {
           throw new ForbiddenException('user not found');
       }
 
-      console.log(user);
+      // console.log(user);
 
       const restaurantId = context.switchToHttp().getRequest().params.restaurantId;
       if (!restaurantId) {
@@ -38,7 +38,7 @@ export class RolesGuard implements CanActivate {
               role:true
           }
       });
-      console.log(member);
+      // console.log(member);
       if (!member) {
         throw new ForbiddenException('You are not a member of this restaurant',
       );

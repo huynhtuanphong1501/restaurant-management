@@ -28,3 +28,9 @@ export enum CategoryStatus{
     ACTIVE = 'ACTIVE',
     INACTIVE = 'INACTIVE'
 }
+
+export enum FoodStatus{
+    AVAILABLE = 'AVAILABLE',
+    UNAVAILABLE = 'UNAVAILABLE',
+    SOLD_OUT = 'SOLD_OUT'
+}

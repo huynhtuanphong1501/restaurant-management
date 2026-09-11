@@ -22,9 +22,11 @@ export class RolesGuard implements CanActivate {
           throw new ForbiddenException('user not found');
       }
 
-      // console.log(user);
+    // console.log(user);
+    
+      const request = context.switchToHttp().getRequest();
 
-      const restaurantId = context.switchToHttp().getRequest().params.restaurantId;
+      const restaurantId = request.params.restaurantId ?? request.body.restaurant_id ?? request.query.restaurant_id;
       if (!restaurantId) {
           throw new ForbiddenException('restaurant not found');
       }

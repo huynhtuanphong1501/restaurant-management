@@ -1,34 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { FoodsService } from './foods.service';
-import { CreateFoodDto } from './dto/create-food.dto';
-import { UpdateFoodDto } from './dto/update-food.dto';
+import { Role } from 'src/common/constants/enum.constant';
+import { Roles } from 'src/common/decorators/role.decorator';
+import { CreateFoodDto } from './dto/createFood.dto';
 
 @Controller('foods')
 export class FoodsController {
   constructor(private readonly foodsService: FoodsService) {}
 
-  @Post()
-  create(@Body() createFoodDto: CreateFoodDto) {
-    return this.foodsService.create(createFoodDto);
+  @Post('createFood')
+  @Roles(Role.OWNER, Role.ADMIN, Role.MANAGER)
+  async createFood(@Body() dto: CreateFoodDto ) {
+    const result = await this.foodsService.createFood(dto);
+    return {
+      result: result,
+      message: 'Food created successfully'
+    }
   }
 
-  @Get()
-  findAll() {
-    return this.foodsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.foodsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFoodDto: UpdateFoodDto) {
-    return this.foodsService.update(+id, updateFoodDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.foodsService.remove(+id);
-  }
+  @Get("getAll")
+  @Roles(Role.OWNER, Role.ADMIN, Role.MANAGER)
+  async getAllFood(@Req() request: Request) {
+    const result = await this.foodsService.getAllFood(request);
+    return {
+      result: result,
+      message: 'Get all food'
+    }
+   }
 }

@@ -14,9 +14,10 @@ import { RolesGuard } from './common/guards/role.guard';
 import { RestaurantMemberModule } from './module-api/restaurant-member/restaurant-member.module';
 import { CatagoryModule } from './module-api/catagory/catagory.module';
 import { FoodsModule } from './module-api/foods/foods.module';
+import { RestaurantTableModule } from './module-api/restaurant-table/restaurant-table.module';
 
 @Module({
-  imports: [PrismaModule, UserModule, TokenModule, CloudinaryModule, RestaurantModule, RestaurantMemberModule, CatagoryModule, FoodsModule],
+  imports: [PrismaModule, UserModule, TokenModule, CloudinaryModule, RestaurantModule, RestaurantMemberModule, CatagoryModule, FoodsModule, RestaurantTableModule],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_GUARD,

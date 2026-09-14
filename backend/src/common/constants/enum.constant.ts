@@ -34,3 +34,10 @@ export enum FoodStatus{
     UNAVAILABLE = 'UNAVAILABLE',
     SOLD_OUT = 'SOLD_OUT'
 }
+
+export enum TableStatus{
+    AVAILABLE = 'AVAILABLE',
+    OCCUPIED = 'OCCUPIED',
+    RESERVED = 'RESERVED',
+    INACTIVE = 'INACTIVE'
+}

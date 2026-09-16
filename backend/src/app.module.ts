@@ -16,9 +16,10 @@ import { CatagoryModule } from './module-api/catagory/catagory.module';
 import { FoodsModule } from './module-api/foods/foods.module';
 import { RestaurantTableModule } from './module-api/restaurant-table/restaurant-table.module';
 import { QrModule } from './module-api/qr/qr.module';
+import { MenuModule } from './module-api/menu/menu.module';
 
 @Module({
-  imports: [PrismaModule, UserModule, TokenModule, CloudinaryModule, RestaurantModule, RestaurantMemberModule, CatagoryModule, FoodsModule, RestaurantTableModule, QrModule],
+  imports: [PrismaModule, UserModule, TokenModule, CloudinaryModule, RestaurantModule, RestaurantMemberModule, CatagoryModule, FoodsModule, RestaurantTableModule, QrModule, MenuModule],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_GUARD,

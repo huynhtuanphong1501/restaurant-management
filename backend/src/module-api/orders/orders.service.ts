@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/module-system/prisma/prisma.service';
 import { OrderGateway } from './orders.gateway';
 import { CreateOrderDto } from './dto/createOrder.dto';
+import { UpdateOrderDto } from './dto/updateOrder.dto';
 
 
 @Injectable()
@@ -82,6 +83,10 @@ export class OrdersService {
         return newOrder;
       },
     );
+    this.orderSocket.emitNewOrder(
+      order.restaurant_id.toString(),
+      order,
+    );
     return {
       id: order.id.toString(),
       restaurant_id: order.restaurant_id.toString(),
@@ -92,4 +97,49 @@ export class OrdersService {
     };
   }
 
+  async updateOrder(dto: UpdateOrderDto, orderId: string, restaurantId:string) {
+    const checkOrder = await this.prisma.orders.findFirst({
+      where: {
+        id: BigInt(orderId)
+      }
+    });
+
+    if (!checkOrder) {
+      throw new BadRequestException("Order not found");
+    }
+
+    const res = await this.prisma.$transaction(
+      async (tx) => {
+        const order = await tx.orders.update({
+          where: {
+            id: BigInt(orderId),
+          },
+          data: {
+            status: dto.status,
+          }
+        });
+
+        await tx.order_items.updateMany({
+          where: {
+            order_id: BigInt(orderId),
+          },
+          data: {
+            status: dto.status,
+          }
+        })
+
+        return order;
+      })
+      
+    this.orderSocket.emitUpdateOrder(res.restaurant_id.toString(), res);
+
+    return {
+      id: res.id.toString(),
+      restaurant_id: res.restaurant_id.toString(),
+      table_id: res.table_id.toString(),
+      order_code: res.order_code,
+      note: res.note,
+      status: res.status
+    }
+  }
 }

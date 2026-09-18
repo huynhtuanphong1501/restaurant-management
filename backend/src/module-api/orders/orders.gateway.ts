@@ -20,11 +20,10 @@ import { TokenService } from 'src/module-system/token/token.service';
   },
 })
 export class OrderGateway {
-
-    constructor(private prisma: PrismaService, private jwtService: TokenService){}
-
   @WebSocketServer()
   server: Server;
+
+  constructor(private prisma: PrismaService, private jwtService: TokenService){}
 
 
   async handleConnection(client: Socket) {
@@ -46,8 +45,7 @@ export class OrderGateway {
     console.log('Socket connected:', client.id);
     console.log('User ID:', userId.toString());
 
-    const members =
-      await this.prisma.restaurant_members.findMany({
+    const members = await this.prisma.restaurant_members.findMany({
         where: {
           user_id: userId,
           status: 'ACTIVE',
@@ -55,8 +53,7 @@ export class OrderGateway {
       });
 
     for (const member of members) {
-      const room =
-        `restaurant:${member.restaurant_id.toString()}`;
+      const room = `restaurant:${member.restaurant_id.toString()}`;
 
       await client.join(room);
 
@@ -66,15 +63,10 @@ export class OrderGateway {
     }
 
   } catch (error) {
-    console.error('Socket authentication failed:', error);
+    console.error('Socket authentication failed:', error);  
     client.disconnect();
   }
 }
-
-
-  // =========================
-  // SOCKET DISCONNECT
-  // =========================
 
   handleDisconnect(client: Socket) {
 
@@ -83,10 +75,6 @@ export class OrderGateway {
     );
   }
 
-
-  // =========================
-  // TEST JOIN
-  // =========================
 
   @SubscribeMessage('join_restaurant')
   async handleJoinRestaurant(
@@ -107,13 +95,9 @@ export class OrderGateway {
     }
 
 
-    const restaurantId =
-      BigInt(data.restaurantId);
+    const restaurantId = BigInt(data.restaurantId);
 
-
-    // Kiểm tra user có thuộc restaurant không
-    const member =
-      await this.prisma.restaurant_members.findFirst({
+    const member = await this.prisma.restaurant_members.findFirst({
         where: {
           user_id: userId,
           restaurant_id: restaurantId,
@@ -136,40 +120,52 @@ export class OrderGateway {
     await client.join(room);
 
 
-    client.emit(
-      'joined_restaurant',
+    client.emit('joined_restaurant',
       {
         room,
         role: member.role,
         message: 'Joined successfully',
-      },
+      }
     );
   }
-
-
-  // =========================
-  // EMIT NEW ORDER
-  // =========================
 
   emitNewOrder(
     restaurantId: string,
     order: any,
   ) {
 
-    const room =
-      `restaurant:${restaurantId}`;
-
-
+    const room = `restaurant:${restaurantId}`;
+    
+    const data = {
+      ...order,
+      id: order.id.toString(),
+      restaurant_id: order.restaurant_id.toString(),
+      table_id: order.table_id.toString()
+    };
     this.server
       .to(room)
-      .emit(
-        'new_order',
-        order,
-      );
+      .emit('new_order',data);
 
 
     console.log(
       `New order emitted to ${room}`,
     );
+  }
+
+  emitUpdateOrder(
+    restaurantId: string,
+    order: any
+  ) {
+    const room = `restaurant:${restaurantId}`;
+    
+    const data = {
+      ...order,
+      id: order.id.toString(),
+      restaurant_id: order.restaurant_id.toString(),
+      table_id: order.table_id.toString()
+    };
+    this.server
+      .to(room)
+      .emit('update_order', data);
   }
 }

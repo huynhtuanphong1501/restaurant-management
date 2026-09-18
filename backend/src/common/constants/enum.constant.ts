@@ -41,3 +41,12 @@ export enum TableStatus{
     RESERVED = 'RESERVED',
     INACTIVE = 'INACTIVE'
 }
+
+export enum OrderStatus{
+    PENDING='PENDING',
+    CONFIRMED='CONFIRMED',
+    COOKING='COOKING',
+    READY='READY',
+    SERVED='SERVED',
+    CANCELLED='CANCELLED'
+}

@@ -100,16 +100,19 @@ model orders {
   status            orders_status     @default(PENDING)
   created_at        DateTime          @default(now()) @db.DateTime(0)
   updated_at        DateTime          @default(now()) @db.DateTime(0)
+  session_id        BigInt            @db.UnsignedBigInt
   order_items       order_items[]
   restaurants       restaurants       @relation(fields: [restaurant_id], references: [id], onDelete: Cascade, map: "orders_ibfk_1")
   restaurant_tables restaurant_tables @relation(fields: [table_id], references: [id], map: "orders_ibfk_2")
   invoices          invoices?         @relation(fields: [invoice_id], references: [id], map: "orders_ibfk_3")
+  table_sessions    table_sessions    @relation(fields: [session_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_4")
 
   @@index([created_at], map: "idx_orders_created_at")
   @@index([invoice_id], map: "idx_orders_invoice")
   @@index([restaurant_id], map: "idx_orders_restaurant")
   @@index([status], map: "idx_orders_status")
   @@index([table_id], map: "idx_orders_table")
+  @@index([session_id], map: "session_id")
 }
 
 model payments {
@@ -168,6 +171,7 @@ model restaurant_tables {
   orders         orders[]
   restaurants    restaurants              @relation(fields: [restaurant_id], references: [id], onDelete: Cascade, map: "restaurant_tables_ibfk_1")
   table_qr_codes table_qr_codes[]
+  table_sessions table_sessions[]
 
   @@unique([restaurant_id, name], map: "uq_table_restaurant_name")
   @@index([restaurant_id], map: "idx_tables_restaurant")
@@ -211,6 +215,18 @@ model table_qr_codes {
   @@index([token], map: "idx_qr_token")
 }
 
+model table_sessions {
+  id                BigInt                @id @default(autoincrement()) @db.UnsignedBigInt
+  table_id          BigInt                @db.UnsignedBigInt
+  status            table_sessions_status @default(ACTIVE)
+  opened_at         DateTime              @default(now()) @db.DateTime(0)
+  closed_at         DateTime?             @db.DateTime(0)
+  orders            orders[]
+  restaurant_tables restaurant_tables     @relation(fields: [table_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "table_sessions_ibfk_1")
+
+  @@index([table_id], map: "table_id")
+}
+
 model users {
   id                 BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
   full_name          String               @db.VarChar(100)
@@ -224,6 +240,11 @@ model users {
   refresh_tokens     refresh_tokens[]
   restaurant_members restaurant_members[]
   restaurants        restaurants[]
+}
+
+enum table_sessions_status {
+  ACTIVE
+  CLOSED
 }
 
 enum payments_method {

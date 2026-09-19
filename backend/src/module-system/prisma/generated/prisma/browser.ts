@@ -73,6 +73,11 @@ export type restaurants = Prisma.restaurantsModel
  */
 export type table_qr_codes = Prisma.table_qr_codesModel
 /**
+ * Model table_sessions
+ * 
+ */
+export type table_sessions = Prisma.table_sessionsModel
+/**
  * Model users
  * 
  */

@@ -9,6 +9,14 @@
 * 🟢 You can import this file directly.
 */
 
+export const table_sessions_status = {
+  ACTIVE: 'ACTIVE',
+  CLOSED: 'CLOSED'
+} as const
+
+export type table_sessions_status = (typeof table_sessions_status)[keyof typeof table_sessions_status]
+
+
 export const payments_method = {
   CASH: 'CASH',
   CARD: 'CARD',

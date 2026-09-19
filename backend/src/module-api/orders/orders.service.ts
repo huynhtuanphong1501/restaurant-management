@@ -52,10 +52,27 @@ export class OrdersService {
     const order = await this.prisma.$transaction(
       async (tx) => {
 
+        let session = await tx.table_sessions.findFirst({
+          where: {
+            table_id: tableId,
+            status: 'ACTIVE',
+          },
+        });
+
+        if (!session) {
+            session = await tx.table_sessions.create({
+            data: {
+              table_id: tableId,
+              status: 'ACTIVE',
+            },
+          });
+        }
+
         const newOrder = await tx.orders.create({
           data: {
             restaurant_id: restaurantId,
             table_id: tableId,
+            session_id: session.id,
             order_code: `ORD-${Date.now()}`,
             note: dto.note,
             status: 'PENDING',
@@ -91,6 +108,7 @@ export class OrdersService {
       id: order.id.toString(),
       restaurant_id: order.restaurant_id.toString(),
       table_id: order.table_id.toString(),
+      session_id: order.session_id.toString(),
       order_code: order.order_code,
       note: order.note,
       status: order.status,
@@ -137,6 +155,7 @@ export class OrdersService {
       id: res.id.toString(),
       restaurant_id: res.restaurant_id.toString(),
       table_id: res.table_id.toString(),
+      session_id: res.session_id.toString(),
       order_code: res.order_code,
       note: res.note,
       status: res.status

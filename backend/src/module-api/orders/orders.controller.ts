@@ -32,5 +32,8 @@ export class OrdersController {
     }
   }
 
+  // @Get(':restaurantId/orders')
+  
 
+  // @Get(':restaurantId/orders/:orderId')
 }

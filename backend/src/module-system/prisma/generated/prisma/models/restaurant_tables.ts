@@ -244,6 +244,7 @@ export type restaurant_tablesWhereInput = {
   orders?: Prisma.OrdersListRelationFilter
   restaurants?: Prisma.XOR<Prisma.RestaurantsScalarRelationFilter, Prisma.restaurantsWhereInput>
   table_qr_codes?: Prisma.Table_qr_codesListRelationFilter
+  table_sessions?: Prisma.Table_sessionsListRelationFilter
 }
 
 export type restaurant_tablesOrderByWithRelationInput = {
@@ -258,6 +259,7 @@ export type restaurant_tablesOrderByWithRelationInput = {
   orders?: Prisma.ordersOrderByRelationAggregateInput
   restaurants?: Prisma.restaurantsOrderByWithRelationInput
   table_qr_codes?: Prisma.table_qr_codesOrderByRelationAggregateInput
+  table_sessions?: Prisma.table_sessionsOrderByRelationAggregateInput
   _relevance?: Prisma.restaurant_tablesOrderByRelevanceInput
 }
 
@@ -277,6 +279,7 @@ export type restaurant_tablesWhereUniqueInput = Prisma.AtLeast<{
   orders?: Prisma.OrdersListRelationFilter
   restaurants?: Prisma.XOR<Prisma.RestaurantsScalarRelationFilter, Prisma.restaurantsWhereInput>
   table_qr_codes?: Prisma.Table_qr_codesListRelationFilter
+  table_sessions?: Prisma.Table_sessionsListRelationFilter
 }, "id" | "restaurant_id_name">
 
 export type restaurant_tablesOrderByWithAggregationInput = {
@@ -318,6 +321,7 @@ export type restaurant_tablesCreateInput = {
   orders?: Prisma.ordersCreateNestedManyWithoutRestaurant_tablesInput
   restaurants: Prisma.restaurantsCreateNestedOneWithoutRestaurant_tablesInput
   table_qr_codes?: Prisma.table_qr_codesCreateNestedManyWithoutRestaurant_tablesInput
+  table_sessions?: Prisma.table_sessionsCreateNestedManyWithoutRestaurant_tablesInput
 }
 
 export type restaurant_tablesUncheckedCreateInput = {
@@ -331,6 +335,7 @@ export type restaurant_tablesUncheckedCreateInput = {
   invoices?: Prisma.invoicesUncheckedCreateNestedManyWithoutRestaurant_tablesInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutRestaurant_tablesInput
   table_qr_codes?: Prisma.table_qr_codesUncheckedCreateNestedManyWithoutRestaurant_tablesInput
+  table_sessions?: Prisma.table_sessionsUncheckedCreateNestedManyWithoutRestaurant_tablesInput
 }
 
 export type restaurant_tablesUpdateInput = {
@@ -344,6 +349,7 @@ export type restaurant_tablesUpdateInput = {
   orders?: Prisma.ordersUpdateManyWithoutRestaurant_tablesNestedInput
   restaurants?: Prisma.restaurantsUpdateOneRequiredWithoutRestaurant_tablesNestedInput
   table_qr_codes?: Prisma.table_qr_codesUpdateManyWithoutRestaurant_tablesNestedInput
+  table_sessions?: Prisma.table_sessionsUpdateManyWithoutRestaurant_tablesNestedInput
 }
 
 export type restaurant_tablesUncheckedUpdateInput = {
@@ -357,6 +363,7 @@ export type restaurant_tablesUncheckedUpdateInput = {
   invoices?: Prisma.invoicesUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
   table_qr_codes?: Prisma.table_qr_codesUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
+  table_sessions?: Prisma.table_sessionsUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
 }
 
 export type restaurant_tablesCreateManyInput = {
@@ -544,6 +551,20 @@ export type restaurant_tablesUpdateOneRequiredWithoutTable_qr_codesNestedInput =
   update?: Prisma.XOR<Prisma.XOR<Prisma.restaurant_tablesUpdateToOneWithWhereWithoutTable_qr_codesInput, Prisma.restaurant_tablesUpdateWithoutTable_qr_codesInput>, Prisma.restaurant_tablesUncheckedUpdateWithoutTable_qr_codesInput>
 }
 
+export type restaurant_tablesCreateNestedOneWithoutTable_sessionsInput = {
+  create?: Prisma.XOR<Prisma.restaurant_tablesCreateWithoutTable_sessionsInput, Prisma.restaurant_tablesUncheckedCreateWithoutTable_sessionsInput>
+  connectOrCreate?: Prisma.restaurant_tablesCreateOrConnectWithoutTable_sessionsInput
+  connect?: Prisma.restaurant_tablesWhereUniqueInput
+}
+
+export type restaurant_tablesUpdateOneRequiredWithoutTable_sessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.restaurant_tablesCreateWithoutTable_sessionsInput, Prisma.restaurant_tablesUncheckedCreateWithoutTable_sessionsInput>
+  connectOrCreate?: Prisma.restaurant_tablesCreateOrConnectWithoutTable_sessionsInput
+  upsert?: Prisma.restaurant_tablesUpsertWithoutTable_sessionsInput
+  connect?: Prisma.restaurant_tablesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.restaurant_tablesUpdateToOneWithWhereWithoutTable_sessionsInput, Prisma.restaurant_tablesUpdateWithoutTable_sessionsInput>, Prisma.restaurant_tablesUncheckedUpdateWithoutTable_sessionsInput>
+}
+
 export type restaurant_tablesCreateWithoutInvoicesInput = {
   id?: bigint | number
   name: string
@@ -554,6 +575,7 @@ export type restaurant_tablesCreateWithoutInvoicesInput = {
   orders?: Prisma.ordersCreateNestedManyWithoutRestaurant_tablesInput
   restaurants: Prisma.restaurantsCreateNestedOneWithoutRestaurant_tablesInput
   table_qr_codes?: Prisma.table_qr_codesCreateNestedManyWithoutRestaurant_tablesInput
+  table_sessions?: Prisma.table_sessionsCreateNestedManyWithoutRestaurant_tablesInput
 }
 
 export type restaurant_tablesUncheckedCreateWithoutInvoicesInput = {
@@ -566,6 +588,7 @@ export type restaurant_tablesUncheckedCreateWithoutInvoicesInput = {
   updated_at?: Date | string
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutRestaurant_tablesInput
   table_qr_codes?: Prisma.table_qr_codesUncheckedCreateNestedManyWithoutRestaurant_tablesInput
+  table_sessions?: Prisma.table_sessionsUncheckedCreateNestedManyWithoutRestaurant_tablesInput
 }
 
 export type restaurant_tablesCreateOrConnectWithoutInvoicesInput = {
@@ -594,6 +617,7 @@ export type restaurant_tablesUpdateWithoutInvoicesInput = {
   orders?: Prisma.ordersUpdateManyWithoutRestaurant_tablesNestedInput
   restaurants?: Prisma.restaurantsUpdateOneRequiredWithoutRestaurant_tablesNestedInput
   table_qr_codes?: Prisma.table_qr_codesUpdateManyWithoutRestaurant_tablesNestedInput
+  table_sessions?: Prisma.table_sessionsUpdateManyWithoutRestaurant_tablesNestedInput
 }
 
 export type restaurant_tablesUncheckedUpdateWithoutInvoicesInput = {
@@ -606,6 +630,7 @@ export type restaurant_tablesUncheckedUpdateWithoutInvoicesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.ordersUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
   table_qr_codes?: Prisma.table_qr_codesUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
+  table_sessions?: Prisma.table_sessionsUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
 }
 
 export type restaurant_tablesCreateWithoutOrdersInput = {
@@ -618,6 +643,7 @@ export type restaurant_tablesCreateWithoutOrdersInput = {
   invoices?: Prisma.invoicesCreateNestedManyWithoutRestaurant_tablesInput
   restaurants: Prisma.restaurantsCreateNestedOneWithoutRestaurant_tablesInput
   table_qr_codes?: Prisma.table_qr_codesCreateNestedManyWithoutRestaurant_tablesInput
+  table_sessions?: Prisma.table_sessionsCreateNestedManyWithoutRestaurant_tablesInput
 }
 
 export type restaurant_tablesUncheckedCreateWithoutOrdersInput = {
@@ -630,6 +656,7 @@ export type restaurant_tablesUncheckedCreateWithoutOrdersInput = {
   updated_at?: Date | string
   invoices?: Prisma.invoicesUncheckedCreateNestedManyWithoutRestaurant_tablesInput
   table_qr_codes?: Prisma.table_qr_codesUncheckedCreateNestedManyWithoutRestaurant_tablesInput
+  table_sessions?: Prisma.table_sessionsUncheckedCreateNestedManyWithoutRestaurant_tablesInput
 }
 
 export type restaurant_tablesCreateOrConnectWithoutOrdersInput = {
@@ -658,6 +685,7 @@ export type restaurant_tablesUpdateWithoutOrdersInput = {
   invoices?: Prisma.invoicesUpdateManyWithoutRestaurant_tablesNestedInput
   restaurants?: Prisma.restaurantsUpdateOneRequiredWithoutRestaurant_tablesNestedInput
   table_qr_codes?: Prisma.table_qr_codesUpdateManyWithoutRestaurant_tablesNestedInput
+  table_sessions?: Prisma.table_sessionsUpdateManyWithoutRestaurant_tablesNestedInput
 }
 
 export type restaurant_tablesUncheckedUpdateWithoutOrdersInput = {
@@ -670,6 +698,7 @@ export type restaurant_tablesUncheckedUpdateWithoutOrdersInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoices?: Prisma.invoicesUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
   table_qr_codes?: Prisma.table_qr_codesUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
+  table_sessions?: Prisma.table_sessionsUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
 }
 
 export type restaurant_tablesCreateWithoutRestaurantsInput = {
@@ -682,6 +711,7 @@ export type restaurant_tablesCreateWithoutRestaurantsInput = {
   invoices?: Prisma.invoicesCreateNestedManyWithoutRestaurant_tablesInput
   orders?: Prisma.ordersCreateNestedManyWithoutRestaurant_tablesInput
   table_qr_codes?: Prisma.table_qr_codesCreateNestedManyWithoutRestaurant_tablesInput
+  table_sessions?: Prisma.table_sessionsCreateNestedManyWithoutRestaurant_tablesInput
 }
 
 export type restaurant_tablesUncheckedCreateWithoutRestaurantsInput = {
@@ -694,6 +724,7 @@ export type restaurant_tablesUncheckedCreateWithoutRestaurantsInput = {
   invoices?: Prisma.invoicesUncheckedCreateNestedManyWithoutRestaurant_tablesInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutRestaurant_tablesInput
   table_qr_codes?: Prisma.table_qr_codesUncheckedCreateNestedManyWithoutRestaurant_tablesInput
+  table_sessions?: Prisma.table_sessionsUncheckedCreateNestedManyWithoutRestaurant_tablesInput
 }
 
 export type restaurant_tablesCreateOrConnectWithoutRestaurantsInput = {
@@ -745,6 +776,7 @@ export type restaurant_tablesCreateWithoutTable_qr_codesInput = {
   invoices?: Prisma.invoicesCreateNestedManyWithoutRestaurant_tablesInput
   orders?: Prisma.ordersCreateNestedManyWithoutRestaurant_tablesInput
   restaurants: Prisma.restaurantsCreateNestedOneWithoutRestaurant_tablesInput
+  table_sessions?: Prisma.table_sessionsCreateNestedManyWithoutRestaurant_tablesInput
 }
 
 export type restaurant_tablesUncheckedCreateWithoutTable_qr_codesInput = {
@@ -757,6 +789,7 @@ export type restaurant_tablesUncheckedCreateWithoutTable_qr_codesInput = {
   updated_at?: Date | string
   invoices?: Prisma.invoicesUncheckedCreateNestedManyWithoutRestaurant_tablesInput
   orders?: Prisma.ordersUncheckedCreateNestedManyWithoutRestaurant_tablesInput
+  table_sessions?: Prisma.table_sessionsUncheckedCreateNestedManyWithoutRestaurant_tablesInput
 }
 
 export type restaurant_tablesCreateOrConnectWithoutTable_qr_codesInput = {
@@ -785,6 +818,7 @@ export type restaurant_tablesUpdateWithoutTable_qr_codesInput = {
   invoices?: Prisma.invoicesUpdateManyWithoutRestaurant_tablesNestedInput
   orders?: Prisma.ordersUpdateManyWithoutRestaurant_tablesNestedInput
   restaurants?: Prisma.restaurantsUpdateOneRequiredWithoutRestaurant_tablesNestedInput
+  table_sessions?: Prisma.table_sessionsUpdateManyWithoutRestaurant_tablesNestedInput
 }
 
 export type restaurant_tablesUncheckedUpdateWithoutTable_qr_codesInput = {
@@ -797,6 +831,75 @@ export type restaurant_tablesUncheckedUpdateWithoutTable_qr_codesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoices?: Prisma.invoicesUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
+  table_sessions?: Prisma.table_sessionsUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
+}
+
+export type restaurant_tablesCreateWithoutTable_sessionsInput = {
+  id?: bigint | number
+  name: string
+  capacity?: number
+  status?: $Enums.restaurant_tables_status
+  created_at?: Date | string
+  updated_at?: Date | string
+  invoices?: Prisma.invoicesCreateNestedManyWithoutRestaurant_tablesInput
+  orders?: Prisma.ordersCreateNestedManyWithoutRestaurant_tablesInput
+  restaurants: Prisma.restaurantsCreateNestedOneWithoutRestaurant_tablesInput
+  table_qr_codes?: Prisma.table_qr_codesCreateNestedManyWithoutRestaurant_tablesInput
+}
+
+export type restaurant_tablesUncheckedCreateWithoutTable_sessionsInput = {
+  id?: bigint | number
+  restaurant_id: bigint | number
+  name: string
+  capacity?: number
+  status?: $Enums.restaurant_tables_status
+  created_at?: Date | string
+  updated_at?: Date | string
+  invoices?: Prisma.invoicesUncheckedCreateNestedManyWithoutRestaurant_tablesInput
+  orders?: Prisma.ordersUncheckedCreateNestedManyWithoutRestaurant_tablesInput
+  table_qr_codes?: Prisma.table_qr_codesUncheckedCreateNestedManyWithoutRestaurant_tablesInput
+}
+
+export type restaurant_tablesCreateOrConnectWithoutTable_sessionsInput = {
+  where: Prisma.restaurant_tablesWhereUniqueInput
+  create: Prisma.XOR<Prisma.restaurant_tablesCreateWithoutTable_sessionsInput, Prisma.restaurant_tablesUncheckedCreateWithoutTable_sessionsInput>
+}
+
+export type restaurant_tablesUpsertWithoutTable_sessionsInput = {
+  update: Prisma.XOR<Prisma.restaurant_tablesUpdateWithoutTable_sessionsInput, Prisma.restaurant_tablesUncheckedUpdateWithoutTable_sessionsInput>
+  create: Prisma.XOR<Prisma.restaurant_tablesCreateWithoutTable_sessionsInput, Prisma.restaurant_tablesUncheckedCreateWithoutTable_sessionsInput>
+  where?: Prisma.restaurant_tablesWhereInput
+}
+
+export type restaurant_tablesUpdateToOneWithWhereWithoutTable_sessionsInput = {
+  where?: Prisma.restaurant_tablesWhereInput
+  data: Prisma.XOR<Prisma.restaurant_tablesUpdateWithoutTable_sessionsInput, Prisma.restaurant_tablesUncheckedUpdateWithoutTable_sessionsInput>
+}
+
+export type restaurant_tablesUpdateWithoutTable_sessionsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.Enumrestaurant_tables_statusFieldUpdateOperationsInput | $Enums.restaurant_tables_status
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invoices?: Prisma.invoicesUpdateManyWithoutRestaurant_tablesNestedInput
+  orders?: Prisma.ordersUpdateManyWithoutRestaurant_tablesNestedInput
+  restaurants?: Prisma.restaurantsUpdateOneRequiredWithoutRestaurant_tablesNestedInput
+  table_qr_codes?: Prisma.table_qr_codesUpdateManyWithoutRestaurant_tablesNestedInput
+}
+
+export type restaurant_tablesUncheckedUpdateWithoutTable_sessionsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  restaurant_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.Enumrestaurant_tables_statusFieldUpdateOperationsInput | $Enums.restaurant_tables_status
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invoices?: Prisma.invoicesUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
+  orders?: Prisma.ordersUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
+  table_qr_codes?: Prisma.table_qr_codesUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
 }
 
 export type restaurant_tablesCreateManyRestaurantsInput = {
@@ -818,6 +921,7 @@ export type restaurant_tablesUpdateWithoutRestaurantsInput = {
   invoices?: Prisma.invoicesUpdateManyWithoutRestaurant_tablesNestedInput
   orders?: Prisma.ordersUpdateManyWithoutRestaurant_tablesNestedInput
   table_qr_codes?: Prisma.table_qr_codesUpdateManyWithoutRestaurant_tablesNestedInput
+  table_sessions?: Prisma.table_sessionsUpdateManyWithoutRestaurant_tablesNestedInput
 }
 
 export type restaurant_tablesUncheckedUpdateWithoutRestaurantsInput = {
@@ -830,6 +934,7 @@ export type restaurant_tablesUncheckedUpdateWithoutRestaurantsInput = {
   invoices?: Prisma.invoicesUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
   orders?: Prisma.ordersUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
   table_qr_codes?: Prisma.table_qr_codesUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
+  table_sessions?: Prisma.table_sessionsUncheckedUpdateManyWithoutRestaurant_tablesNestedInput
 }
 
 export type restaurant_tablesUncheckedUpdateManyWithoutRestaurantsInput = {
@@ -850,12 +955,14 @@ export type Restaurant_tablesCountOutputType = {
   invoices: number
   orders: number
   table_qr_codes: number
+  table_sessions: number
 }
 
 export type Restaurant_tablesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   invoices?: boolean | Restaurant_tablesCountOutputTypeCountInvoicesArgs
   orders?: boolean | Restaurant_tablesCountOutputTypeCountOrdersArgs
   table_qr_codes?: boolean | Restaurant_tablesCountOutputTypeCountTable_qr_codesArgs
+  table_sessions?: boolean | Restaurant_tablesCountOutputTypeCountTable_sessionsArgs
 }
 
 /**
@@ -889,6 +996,13 @@ export type Restaurant_tablesCountOutputTypeCountTable_qr_codesArgs<ExtArgs exte
   where?: Prisma.table_qr_codesWhereInput
 }
 
+/**
+ * Restaurant_tablesCountOutputType without action
+ */
+export type Restaurant_tablesCountOutputTypeCountTable_sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.table_sessionsWhereInput
+}
+
 
 export type restaurant_tablesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -902,6 +1016,7 @@ export type restaurant_tablesSelect<ExtArgs extends runtime.Types.Extensions.Int
   orders?: boolean | Prisma.restaurant_tables$ordersArgs<ExtArgs>
   restaurants?: boolean | Prisma.restaurantsDefaultArgs<ExtArgs>
   table_qr_codes?: boolean | Prisma.restaurant_tables$table_qr_codesArgs<ExtArgs>
+  table_sessions?: boolean | Prisma.restaurant_tables$table_sessionsArgs<ExtArgs>
   _count?: boolean | Prisma.Restaurant_tablesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["restaurant_tables"]>
 
@@ -923,6 +1038,7 @@ export type restaurant_tablesInclude<ExtArgs extends runtime.Types.Extensions.In
   orders?: boolean | Prisma.restaurant_tables$ordersArgs<ExtArgs>
   restaurants?: boolean | Prisma.restaurantsDefaultArgs<ExtArgs>
   table_qr_codes?: boolean | Prisma.restaurant_tables$table_qr_codesArgs<ExtArgs>
+  table_sessions?: boolean | Prisma.restaurant_tables$table_sessionsArgs<ExtArgs>
   _count?: boolean | Prisma.Restaurant_tablesCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -933,6 +1049,7 @@ export type $restaurant_tablesPayload<ExtArgs extends runtime.Types.Extensions.I
     orders: Prisma.$ordersPayload<ExtArgs>[]
     restaurants: Prisma.$restaurantsPayload<ExtArgs>
     table_qr_codes: Prisma.$table_qr_codesPayload<ExtArgs>[]
+    table_sessions: Prisma.$table_sessionsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -1286,6 +1403,7 @@ export interface Prisma__restaurant_tablesClient<T, Null = never, ExtArgs extend
   orders<T extends Prisma.restaurant_tables$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.restaurant_tables$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ordersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   restaurants<T extends Prisma.restaurantsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.restaurantsDefaultArgs<ExtArgs>>): Prisma.Prisma__restaurantsClient<runtime.Types.Result.GetResult<Prisma.$restaurantsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   table_qr_codes<T extends Prisma.restaurant_tables$table_qr_codesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.restaurant_tables$table_qr_codesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$table_qr_codesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  table_sessions<T extends Prisma.restaurant_tables$table_sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.restaurant_tables$table_sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$table_sessionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1739,6 +1857,30 @@ export type restaurant_tables$table_qr_codesArgs<ExtArgs extends runtime.Types.E
   take?: number
   skip?: number
   distinct?: Prisma.Table_qr_codesScalarFieldEnum | Prisma.Table_qr_codesScalarFieldEnum[]
+}
+
+/**
+ * restaurant_tables.table_sessions
+ */
+export type restaurant_tables$table_sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the table_sessions
+   */
+  select?: Prisma.table_sessionsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the table_sessions
+   */
+  omit?: Prisma.table_sessionsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.table_sessionsInclude<ExtArgs> | null
+  where?: Prisma.table_sessionsWhereInput
+  orderBy?: Prisma.table_sessionsOrderByWithRelationInput | Prisma.table_sessionsOrderByWithRelationInput[]
+  cursor?: Prisma.table_sessionsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Table_sessionsScalarFieldEnum | Prisma.Table_sessionsScalarFieldEnum[]
 }
 
 /**

@@ -31,6 +31,7 @@ export type OrdersAvgAggregateOutputType = {
   restaurant_id: number | null
   table_id: number | null
   invoice_id: number | null
+  session_id: number | null
 }
 
 export type OrdersSumAggregateOutputType = {
@@ -38,6 +39,7 @@ export type OrdersSumAggregateOutputType = {
   restaurant_id: bigint | null
   table_id: bigint | null
   invoice_id: bigint | null
+  session_id: bigint | null
 }
 
 export type OrdersMinAggregateOutputType = {
@@ -50,6 +52,7 @@ export type OrdersMinAggregateOutputType = {
   status: $Enums.orders_status | null
   created_at: Date | null
   updated_at: Date | null
+  session_id: bigint | null
 }
 
 export type OrdersMaxAggregateOutputType = {
@@ -62,6 +65,7 @@ export type OrdersMaxAggregateOutputType = {
   status: $Enums.orders_status | null
   created_at: Date | null
   updated_at: Date | null
+  session_id: bigint | null
 }
 
 export type OrdersCountAggregateOutputType = {
@@ -74,6 +78,7 @@ export type OrdersCountAggregateOutputType = {
   status: number
   created_at: number
   updated_at: number
+  session_id: number
   _all: number
 }
 
@@ -83,6 +88,7 @@ export type OrdersAvgAggregateInputType = {
   restaurant_id?: true
   table_id?: true
   invoice_id?: true
+  session_id?: true
 }
 
 export type OrdersSumAggregateInputType = {
@@ -90,6 +96,7 @@ export type OrdersSumAggregateInputType = {
   restaurant_id?: true
   table_id?: true
   invoice_id?: true
+  session_id?: true
 }
 
 export type OrdersMinAggregateInputType = {
@@ -102,6 +109,7 @@ export type OrdersMinAggregateInputType = {
   status?: true
   created_at?: true
   updated_at?: true
+  session_id?: true
 }
 
 export type OrdersMaxAggregateInputType = {
@@ -114,6 +122,7 @@ export type OrdersMaxAggregateInputType = {
   status?: true
   created_at?: true
   updated_at?: true
+  session_id?: true
 }
 
 export type OrdersCountAggregateInputType = {
@@ -126,6 +135,7 @@ export type OrdersCountAggregateInputType = {
   status?: true
   created_at?: true
   updated_at?: true
+  session_id?: true
   _all?: true
 }
 
@@ -225,6 +235,7 @@ export type OrdersGroupByOutputType = {
   status: $Enums.orders_status
   created_at: Date
   updated_at: Date
+  session_id: bigint
   _count: OrdersCountAggregateOutputType | null
   _avg: OrdersAvgAggregateOutputType | null
   _sum: OrdersSumAggregateOutputType | null
@@ -260,10 +271,12 @@ export type ordersWhereInput = {
   status?: Prisma.Enumorders_statusFilter<"orders"> | $Enums.orders_status
   created_at?: Prisma.DateTimeFilter<"orders"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"orders"> | Date | string
+  session_id?: Prisma.BigIntFilter<"orders"> | bigint | number
   order_items?: Prisma.Order_itemsListRelationFilter
   restaurants?: Prisma.XOR<Prisma.RestaurantsScalarRelationFilter, Prisma.restaurantsWhereInput>
   restaurant_tables?: Prisma.XOR<Prisma.Restaurant_tablesScalarRelationFilter, Prisma.restaurant_tablesWhereInput>
   invoices?: Prisma.XOR<Prisma.InvoicesNullableScalarRelationFilter, Prisma.invoicesWhereInput> | null
+  table_sessions?: Prisma.XOR<Prisma.Table_sessionsScalarRelationFilter, Prisma.table_sessionsWhereInput>
 }
 
 export type ordersOrderByWithRelationInput = {
@@ -276,10 +289,12 @@ export type ordersOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  session_id?: Prisma.SortOrder
   order_items?: Prisma.order_itemsOrderByRelationAggregateInput
   restaurants?: Prisma.restaurantsOrderByWithRelationInput
   restaurant_tables?: Prisma.restaurant_tablesOrderByWithRelationInput
   invoices?: Prisma.invoicesOrderByWithRelationInput
+  table_sessions?: Prisma.table_sessionsOrderByWithRelationInput
   _relevance?: Prisma.ordersOrderByRelevanceInput
 }
 
@@ -296,10 +311,12 @@ export type ordersWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.Enumorders_statusFilter<"orders"> | $Enums.orders_status
   created_at?: Prisma.DateTimeFilter<"orders"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"orders"> | Date | string
+  session_id?: Prisma.BigIntFilter<"orders"> | bigint | number
   order_items?: Prisma.Order_itemsListRelationFilter
   restaurants?: Prisma.XOR<Prisma.RestaurantsScalarRelationFilter, Prisma.restaurantsWhereInput>
   restaurant_tables?: Prisma.XOR<Prisma.Restaurant_tablesScalarRelationFilter, Prisma.restaurant_tablesWhereInput>
   invoices?: Prisma.XOR<Prisma.InvoicesNullableScalarRelationFilter, Prisma.invoicesWhereInput> | null
+  table_sessions?: Prisma.XOR<Prisma.Table_sessionsScalarRelationFilter, Prisma.table_sessionsWhereInput>
 }, "id" | "order_code">
 
 export type ordersOrderByWithAggregationInput = {
@@ -312,6 +329,7 @@ export type ordersOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  session_id?: Prisma.SortOrder
   _count?: Prisma.ordersCountOrderByAggregateInput
   _avg?: Prisma.ordersAvgOrderByAggregateInput
   _max?: Prisma.ordersMaxOrderByAggregateInput
@@ -332,6 +350,7 @@ export type ordersScalarWhereWithAggregatesInput = {
   status?: Prisma.Enumorders_statusWithAggregatesFilter<"orders"> | $Enums.orders_status
   created_at?: Prisma.DateTimeWithAggregatesFilter<"orders"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"orders"> | Date | string
+  session_id?: Prisma.BigIntWithAggregatesFilter<"orders"> | bigint | number
 }
 
 export type ordersCreateInput = {
@@ -345,6 +364,7 @@ export type ordersCreateInput = {
   restaurants: Prisma.restaurantsCreateNestedOneWithoutOrdersInput
   restaurant_tables: Prisma.restaurant_tablesCreateNestedOneWithoutOrdersInput
   invoices?: Prisma.invoicesCreateNestedOneWithoutOrdersInput
+  table_sessions: Prisma.table_sessionsCreateNestedOneWithoutOrdersInput
 }
 
 export type ordersUncheckedCreateInput = {
@@ -357,6 +377,7 @@ export type ordersUncheckedCreateInput = {
   status?: $Enums.orders_status
   created_at?: Date | string
   updated_at?: Date | string
+  session_id: bigint | number
   order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutOrdersInput
 }
 
@@ -371,6 +392,7 @@ export type ordersUpdateInput = {
   restaurants?: Prisma.restaurantsUpdateOneRequiredWithoutOrdersNestedInput
   restaurant_tables?: Prisma.restaurant_tablesUpdateOneRequiredWithoutOrdersNestedInput
   invoices?: Prisma.invoicesUpdateOneWithoutOrdersNestedInput
+  table_sessions?: Prisma.table_sessionsUpdateOneRequiredWithoutOrdersNestedInput
 }
 
 export type ordersUncheckedUpdateInput = {
@@ -383,6 +405,7 @@ export type ordersUncheckedUpdateInput = {
   status?: Prisma.Enumorders_statusFieldUpdateOperationsInput | $Enums.orders_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutOrdersNestedInput
 }
 
@@ -396,6 +419,7 @@ export type ordersCreateManyInput = {
   status?: $Enums.orders_status
   created_at?: Date | string
   updated_at?: Date | string
+  session_id: bigint | number
 }
 
 export type ordersUpdateManyMutationInput = {
@@ -417,6 +441,7 @@ export type ordersUncheckedUpdateManyInput = {
   status?: Prisma.Enumorders_statusFieldUpdateOperationsInput | $Enums.orders_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
 }
 
 export type OrdersListRelationFilter = {
@@ -450,6 +475,7 @@ export type ordersCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  session_id?: Prisma.SortOrder
 }
 
 export type ordersAvgOrderByAggregateInput = {
@@ -457,6 +483,7 @@ export type ordersAvgOrderByAggregateInput = {
   restaurant_id?: Prisma.SortOrder
   table_id?: Prisma.SortOrder
   invoice_id?: Prisma.SortOrder
+  session_id?: Prisma.SortOrder
 }
 
 export type ordersMaxOrderByAggregateInput = {
@@ -469,6 +496,7 @@ export type ordersMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  session_id?: Prisma.SortOrder
 }
 
 export type ordersMinOrderByAggregateInput = {
@@ -481,6 +509,7 @@ export type ordersMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  session_id?: Prisma.SortOrder
 }
 
 export type ordersSumOrderByAggregateInput = {
@@ -488,6 +517,7 @@ export type ordersSumOrderByAggregateInput = {
   restaurant_id?: Prisma.SortOrder
   table_id?: Prisma.SortOrder
   invoice_id?: Prisma.SortOrder
+  session_id?: Prisma.SortOrder
 }
 
 export type ordersCreateNestedManyWithoutInvoicesInput = {
@@ -642,6 +672,48 @@ export type ordersUncheckedUpdateManyWithoutRestaurantsNestedInput = {
   deleteMany?: Prisma.ordersScalarWhereInput | Prisma.ordersScalarWhereInput[]
 }
 
+export type ordersCreateNestedManyWithoutTable_sessionsInput = {
+  create?: Prisma.XOR<Prisma.ordersCreateWithoutTable_sessionsInput, Prisma.ordersUncheckedCreateWithoutTable_sessionsInput> | Prisma.ordersCreateWithoutTable_sessionsInput[] | Prisma.ordersUncheckedCreateWithoutTable_sessionsInput[]
+  connectOrCreate?: Prisma.ordersCreateOrConnectWithoutTable_sessionsInput | Prisma.ordersCreateOrConnectWithoutTable_sessionsInput[]
+  createMany?: Prisma.ordersCreateManyTable_sessionsInputEnvelope
+  connect?: Prisma.ordersWhereUniqueInput | Prisma.ordersWhereUniqueInput[]
+}
+
+export type ordersUncheckedCreateNestedManyWithoutTable_sessionsInput = {
+  create?: Prisma.XOR<Prisma.ordersCreateWithoutTable_sessionsInput, Prisma.ordersUncheckedCreateWithoutTable_sessionsInput> | Prisma.ordersCreateWithoutTable_sessionsInput[] | Prisma.ordersUncheckedCreateWithoutTable_sessionsInput[]
+  connectOrCreate?: Prisma.ordersCreateOrConnectWithoutTable_sessionsInput | Prisma.ordersCreateOrConnectWithoutTable_sessionsInput[]
+  createMany?: Prisma.ordersCreateManyTable_sessionsInputEnvelope
+  connect?: Prisma.ordersWhereUniqueInput | Prisma.ordersWhereUniqueInput[]
+}
+
+export type ordersUpdateManyWithoutTable_sessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ordersCreateWithoutTable_sessionsInput, Prisma.ordersUncheckedCreateWithoutTable_sessionsInput> | Prisma.ordersCreateWithoutTable_sessionsInput[] | Prisma.ordersUncheckedCreateWithoutTable_sessionsInput[]
+  connectOrCreate?: Prisma.ordersCreateOrConnectWithoutTable_sessionsInput | Prisma.ordersCreateOrConnectWithoutTable_sessionsInput[]
+  upsert?: Prisma.ordersUpsertWithWhereUniqueWithoutTable_sessionsInput | Prisma.ordersUpsertWithWhereUniqueWithoutTable_sessionsInput[]
+  createMany?: Prisma.ordersCreateManyTable_sessionsInputEnvelope
+  set?: Prisma.ordersWhereUniqueInput | Prisma.ordersWhereUniqueInput[]
+  disconnect?: Prisma.ordersWhereUniqueInput | Prisma.ordersWhereUniqueInput[]
+  delete?: Prisma.ordersWhereUniqueInput | Prisma.ordersWhereUniqueInput[]
+  connect?: Prisma.ordersWhereUniqueInput | Prisma.ordersWhereUniqueInput[]
+  update?: Prisma.ordersUpdateWithWhereUniqueWithoutTable_sessionsInput | Prisma.ordersUpdateWithWhereUniqueWithoutTable_sessionsInput[]
+  updateMany?: Prisma.ordersUpdateManyWithWhereWithoutTable_sessionsInput | Prisma.ordersUpdateManyWithWhereWithoutTable_sessionsInput[]
+  deleteMany?: Prisma.ordersScalarWhereInput | Prisma.ordersScalarWhereInput[]
+}
+
+export type ordersUncheckedUpdateManyWithoutTable_sessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ordersCreateWithoutTable_sessionsInput, Prisma.ordersUncheckedCreateWithoutTable_sessionsInput> | Prisma.ordersCreateWithoutTable_sessionsInput[] | Prisma.ordersUncheckedCreateWithoutTable_sessionsInput[]
+  connectOrCreate?: Prisma.ordersCreateOrConnectWithoutTable_sessionsInput | Prisma.ordersCreateOrConnectWithoutTable_sessionsInput[]
+  upsert?: Prisma.ordersUpsertWithWhereUniqueWithoutTable_sessionsInput | Prisma.ordersUpsertWithWhereUniqueWithoutTable_sessionsInput[]
+  createMany?: Prisma.ordersCreateManyTable_sessionsInputEnvelope
+  set?: Prisma.ordersWhereUniqueInput | Prisma.ordersWhereUniqueInput[]
+  disconnect?: Prisma.ordersWhereUniqueInput | Prisma.ordersWhereUniqueInput[]
+  delete?: Prisma.ordersWhereUniqueInput | Prisma.ordersWhereUniqueInput[]
+  connect?: Prisma.ordersWhereUniqueInput | Prisma.ordersWhereUniqueInput[]
+  update?: Prisma.ordersUpdateWithWhereUniqueWithoutTable_sessionsInput | Prisma.ordersUpdateWithWhereUniqueWithoutTable_sessionsInput[]
+  updateMany?: Prisma.ordersUpdateManyWithWhereWithoutTable_sessionsInput | Prisma.ordersUpdateManyWithWhereWithoutTable_sessionsInput[]
+  deleteMany?: Prisma.ordersScalarWhereInput | Prisma.ordersScalarWhereInput[]
+}
+
 export type ordersCreateWithoutInvoicesInput = {
   id?: bigint | number
   order_code: string
@@ -652,6 +724,7 @@ export type ordersCreateWithoutInvoicesInput = {
   order_items?: Prisma.order_itemsCreateNestedManyWithoutOrdersInput
   restaurants: Prisma.restaurantsCreateNestedOneWithoutOrdersInput
   restaurant_tables: Prisma.restaurant_tablesCreateNestedOneWithoutOrdersInput
+  table_sessions: Prisma.table_sessionsCreateNestedOneWithoutOrdersInput
 }
 
 export type ordersUncheckedCreateWithoutInvoicesInput = {
@@ -663,6 +736,7 @@ export type ordersUncheckedCreateWithoutInvoicesInput = {
   status?: $Enums.orders_status
   created_at?: Date | string
   updated_at?: Date | string
+  session_id: bigint | number
   order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutOrdersInput
 }
 
@@ -705,6 +779,7 @@ export type ordersScalarWhereInput = {
   status?: Prisma.Enumorders_statusFilter<"orders"> | $Enums.orders_status
   created_at?: Prisma.DateTimeFilter<"orders"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"orders"> | Date | string
+  session_id?: Prisma.BigIntFilter<"orders"> | bigint | number
 }
 
 export type ordersCreateWithoutOrder_itemsInput = {
@@ -717,6 +792,7 @@ export type ordersCreateWithoutOrder_itemsInput = {
   restaurants: Prisma.restaurantsCreateNestedOneWithoutOrdersInput
   restaurant_tables: Prisma.restaurant_tablesCreateNestedOneWithoutOrdersInput
   invoices?: Prisma.invoicesCreateNestedOneWithoutOrdersInput
+  table_sessions: Prisma.table_sessionsCreateNestedOneWithoutOrdersInput
 }
 
 export type ordersUncheckedCreateWithoutOrder_itemsInput = {
@@ -729,6 +805,7 @@ export type ordersUncheckedCreateWithoutOrder_itemsInput = {
   status?: $Enums.orders_status
   created_at?: Date | string
   updated_at?: Date | string
+  session_id: bigint | number
 }
 
 export type ordersCreateOrConnectWithoutOrder_itemsInput = {
@@ -757,6 +834,7 @@ export type ordersUpdateWithoutOrder_itemsInput = {
   restaurants?: Prisma.restaurantsUpdateOneRequiredWithoutOrdersNestedInput
   restaurant_tables?: Prisma.restaurant_tablesUpdateOneRequiredWithoutOrdersNestedInput
   invoices?: Prisma.invoicesUpdateOneWithoutOrdersNestedInput
+  table_sessions?: Prisma.table_sessionsUpdateOneRequiredWithoutOrdersNestedInput
 }
 
 export type ordersUncheckedUpdateWithoutOrder_itemsInput = {
@@ -769,6 +847,7 @@ export type ordersUncheckedUpdateWithoutOrder_itemsInput = {
   status?: Prisma.Enumorders_statusFieldUpdateOperationsInput | $Enums.orders_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
 }
 
 export type ordersCreateWithoutRestaurant_tablesInput = {
@@ -781,6 +860,7 @@ export type ordersCreateWithoutRestaurant_tablesInput = {
   order_items?: Prisma.order_itemsCreateNestedManyWithoutOrdersInput
   restaurants: Prisma.restaurantsCreateNestedOneWithoutOrdersInput
   invoices?: Prisma.invoicesCreateNestedOneWithoutOrdersInput
+  table_sessions: Prisma.table_sessionsCreateNestedOneWithoutOrdersInput
 }
 
 export type ordersUncheckedCreateWithoutRestaurant_tablesInput = {
@@ -792,6 +872,7 @@ export type ordersUncheckedCreateWithoutRestaurant_tablesInput = {
   status?: $Enums.orders_status
   created_at?: Date | string
   updated_at?: Date | string
+  session_id: bigint | number
   order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutOrdersInput
 }
 
@@ -831,6 +912,7 @@ export type ordersCreateWithoutRestaurantsInput = {
   order_items?: Prisma.order_itemsCreateNestedManyWithoutOrdersInput
   restaurant_tables: Prisma.restaurant_tablesCreateNestedOneWithoutOrdersInput
   invoices?: Prisma.invoicesCreateNestedOneWithoutOrdersInput
+  table_sessions: Prisma.table_sessionsCreateNestedOneWithoutOrdersInput
 }
 
 export type ordersUncheckedCreateWithoutRestaurantsInput = {
@@ -842,6 +924,7 @@ export type ordersUncheckedCreateWithoutRestaurantsInput = {
   status?: $Enums.orders_status
   created_at?: Date | string
   updated_at?: Date | string
+  session_id: bigint | number
   order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutOrdersInput
 }
 
@@ -871,6 +954,58 @@ export type ordersUpdateManyWithWhereWithoutRestaurantsInput = {
   data: Prisma.XOR<Prisma.ordersUpdateManyMutationInput, Prisma.ordersUncheckedUpdateManyWithoutRestaurantsInput>
 }
 
+export type ordersCreateWithoutTable_sessionsInput = {
+  id?: bigint | number
+  order_code: string
+  note?: string | null
+  status?: $Enums.orders_status
+  created_at?: Date | string
+  updated_at?: Date | string
+  order_items?: Prisma.order_itemsCreateNestedManyWithoutOrdersInput
+  restaurants: Prisma.restaurantsCreateNestedOneWithoutOrdersInput
+  restaurant_tables: Prisma.restaurant_tablesCreateNestedOneWithoutOrdersInput
+  invoices?: Prisma.invoicesCreateNestedOneWithoutOrdersInput
+}
+
+export type ordersUncheckedCreateWithoutTable_sessionsInput = {
+  id?: bigint | number
+  restaurant_id: bigint | number
+  table_id: bigint | number
+  invoice_id?: bigint | number | null
+  order_code: string
+  note?: string | null
+  status?: $Enums.orders_status
+  created_at?: Date | string
+  updated_at?: Date | string
+  order_items?: Prisma.order_itemsUncheckedCreateNestedManyWithoutOrdersInput
+}
+
+export type ordersCreateOrConnectWithoutTable_sessionsInput = {
+  where: Prisma.ordersWhereUniqueInput
+  create: Prisma.XOR<Prisma.ordersCreateWithoutTable_sessionsInput, Prisma.ordersUncheckedCreateWithoutTable_sessionsInput>
+}
+
+export type ordersCreateManyTable_sessionsInputEnvelope = {
+  data: Prisma.ordersCreateManyTable_sessionsInput | Prisma.ordersCreateManyTable_sessionsInput[]
+  skipDuplicates?: boolean
+}
+
+export type ordersUpsertWithWhereUniqueWithoutTable_sessionsInput = {
+  where: Prisma.ordersWhereUniqueInput
+  update: Prisma.XOR<Prisma.ordersUpdateWithoutTable_sessionsInput, Prisma.ordersUncheckedUpdateWithoutTable_sessionsInput>
+  create: Prisma.XOR<Prisma.ordersCreateWithoutTable_sessionsInput, Prisma.ordersUncheckedCreateWithoutTable_sessionsInput>
+}
+
+export type ordersUpdateWithWhereUniqueWithoutTable_sessionsInput = {
+  where: Prisma.ordersWhereUniqueInput
+  data: Prisma.XOR<Prisma.ordersUpdateWithoutTable_sessionsInput, Prisma.ordersUncheckedUpdateWithoutTable_sessionsInput>
+}
+
+export type ordersUpdateManyWithWhereWithoutTable_sessionsInput = {
+  where: Prisma.ordersScalarWhereInput
+  data: Prisma.XOR<Prisma.ordersUpdateManyMutationInput, Prisma.ordersUncheckedUpdateManyWithoutTable_sessionsInput>
+}
+
 export type ordersCreateManyInvoicesInput = {
   id?: bigint | number
   restaurant_id: bigint | number
@@ -880,6 +1015,7 @@ export type ordersCreateManyInvoicesInput = {
   status?: $Enums.orders_status
   created_at?: Date | string
   updated_at?: Date | string
+  session_id: bigint | number
 }
 
 export type ordersUpdateWithoutInvoicesInput = {
@@ -892,6 +1028,7 @@ export type ordersUpdateWithoutInvoicesInput = {
   order_items?: Prisma.order_itemsUpdateManyWithoutOrdersNestedInput
   restaurants?: Prisma.restaurantsUpdateOneRequiredWithoutOrdersNestedInput
   restaurant_tables?: Prisma.restaurant_tablesUpdateOneRequiredWithoutOrdersNestedInput
+  table_sessions?: Prisma.table_sessionsUpdateOneRequiredWithoutOrdersNestedInput
 }
 
 export type ordersUncheckedUpdateWithoutInvoicesInput = {
@@ -903,6 +1040,7 @@ export type ordersUncheckedUpdateWithoutInvoicesInput = {
   status?: Prisma.Enumorders_statusFieldUpdateOperationsInput | $Enums.orders_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutOrdersNestedInput
 }
 
@@ -915,6 +1053,7 @@ export type ordersUncheckedUpdateManyWithoutInvoicesInput = {
   status?: Prisma.Enumorders_statusFieldUpdateOperationsInput | $Enums.orders_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
 }
 
 export type ordersCreateManyRestaurant_tablesInput = {
@@ -926,6 +1065,7 @@ export type ordersCreateManyRestaurant_tablesInput = {
   status?: $Enums.orders_status
   created_at?: Date | string
   updated_at?: Date | string
+  session_id: bigint | number
 }
 
 export type ordersUpdateWithoutRestaurant_tablesInput = {
@@ -938,6 +1078,7 @@ export type ordersUpdateWithoutRestaurant_tablesInput = {
   order_items?: Prisma.order_itemsUpdateManyWithoutOrdersNestedInput
   restaurants?: Prisma.restaurantsUpdateOneRequiredWithoutOrdersNestedInput
   invoices?: Prisma.invoicesUpdateOneWithoutOrdersNestedInput
+  table_sessions?: Prisma.table_sessionsUpdateOneRequiredWithoutOrdersNestedInput
 }
 
 export type ordersUncheckedUpdateWithoutRestaurant_tablesInput = {
@@ -949,6 +1090,7 @@ export type ordersUncheckedUpdateWithoutRestaurant_tablesInput = {
   status?: Prisma.Enumorders_statusFieldUpdateOperationsInput | $Enums.orders_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutOrdersNestedInput
 }
 
@@ -961,6 +1103,7 @@ export type ordersUncheckedUpdateManyWithoutRestaurant_tablesInput = {
   status?: Prisma.Enumorders_statusFieldUpdateOperationsInput | $Enums.orders_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
 }
 
 export type ordersCreateManyRestaurantsInput = {
@@ -972,6 +1115,7 @@ export type ordersCreateManyRestaurantsInput = {
   status?: $Enums.orders_status
   created_at?: Date | string
   updated_at?: Date | string
+  session_id: bigint | number
 }
 
 export type ordersUpdateWithoutRestaurantsInput = {
@@ -984,6 +1128,7 @@ export type ordersUpdateWithoutRestaurantsInput = {
   order_items?: Prisma.order_itemsUpdateManyWithoutOrdersNestedInput
   restaurant_tables?: Prisma.restaurant_tablesUpdateOneRequiredWithoutOrdersNestedInput
   invoices?: Prisma.invoicesUpdateOneWithoutOrdersNestedInput
+  table_sessions?: Prisma.table_sessionsUpdateOneRequiredWithoutOrdersNestedInput
 }
 
 export type ordersUncheckedUpdateWithoutRestaurantsInput = {
@@ -995,11 +1140,63 @@ export type ordersUncheckedUpdateWithoutRestaurantsInput = {
   status?: Prisma.Enumorders_statusFieldUpdateOperationsInput | $Enums.orders_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutOrdersNestedInput
 }
 
 export type ordersUncheckedUpdateManyWithoutRestaurantsInput = {
   id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  table_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  invoice_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  order_code?: Prisma.StringFieldUpdateOperationsInput | string
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.Enumorders_statusFieldUpdateOperationsInput | $Enums.orders_status
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+}
+
+export type ordersCreateManyTable_sessionsInput = {
+  id?: bigint | number
+  restaurant_id: bigint | number
+  table_id: bigint | number
+  invoice_id?: bigint | number | null
+  order_code: string
+  note?: string | null
+  status?: $Enums.orders_status
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type ordersUpdateWithoutTable_sessionsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  order_code?: Prisma.StringFieldUpdateOperationsInput | string
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.Enumorders_statusFieldUpdateOperationsInput | $Enums.orders_status
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order_items?: Prisma.order_itemsUpdateManyWithoutOrdersNestedInput
+  restaurants?: Prisma.restaurantsUpdateOneRequiredWithoutOrdersNestedInput
+  restaurant_tables?: Prisma.restaurant_tablesUpdateOneRequiredWithoutOrdersNestedInput
+  invoices?: Prisma.invoicesUpdateOneWithoutOrdersNestedInput
+}
+
+export type ordersUncheckedUpdateWithoutTable_sessionsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  restaurant_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  table_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  invoice_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  order_code?: Prisma.StringFieldUpdateOperationsInput | string
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.Enumorders_statusFieldUpdateOperationsInput | $Enums.orders_status
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order_items?: Prisma.order_itemsUncheckedUpdateManyWithoutOrdersNestedInput
+}
+
+export type ordersUncheckedUpdateManyWithoutTable_sessionsInput = {
+  id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  restaurant_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   table_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   invoice_id?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   order_code?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1050,10 +1247,12 @@ export type ordersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   status?: boolean
   created_at?: boolean
   updated_at?: boolean
+  session_id?: boolean
   order_items?: boolean | Prisma.orders$order_itemsArgs<ExtArgs>
   restaurants?: boolean | Prisma.restaurantsDefaultArgs<ExtArgs>
   restaurant_tables?: boolean | Prisma.restaurant_tablesDefaultArgs<ExtArgs>
   invoices?: boolean | Prisma.orders$invoicesArgs<ExtArgs>
+  table_sessions?: boolean | Prisma.table_sessionsDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.OrdersCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["orders"]>
 
@@ -1069,14 +1268,16 @@ export type ordersSelectScalar = {
   status?: boolean
   created_at?: boolean
   updated_at?: boolean
+  session_id?: boolean
 }
 
-export type ordersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "restaurant_id" | "table_id" | "invoice_id" | "order_code" | "note" | "status" | "created_at" | "updated_at", ExtArgs["result"]["orders"]>
+export type ordersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "restaurant_id" | "table_id" | "invoice_id" | "order_code" | "note" | "status" | "created_at" | "updated_at" | "session_id", ExtArgs["result"]["orders"]>
 export type ordersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order_items?: boolean | Prisma.orders$order_itemsArgs<ExtArgs>
   restaurants?: boolean | Prisma.restaurantsDefaultArgs<ExtArgs>
   restaurant_tables?: boolean | Prisma.restaurant_tablesDefaultArgs<ExtArgs>
   invoices?: boolean | Prisma.orders$invoicesArgs<ExtArgs>
+  table_sessions?: boolean | Prisma.table_sessionsDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.OrdersCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1087,6 +1288,7 @@ export type $ordersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     restaurants: Prisma.$restaurantsPayload<ExtArgs>
     restaurant_tables: Prisma.$restaurant_tablesPayload<ExtArgs>
     invoices: Prisma.$invoicesPayload<ExtArgs> | null
+    table_sessions: Prisma.$table_sessionsPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: bigint
@@ -1098,6 +1300,7 @@ export type $ordersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     status: $Enums.orders_status
     created_at: Date
     updated_at: Date
+    session_id: bigint
   }, ExtArgs["result"]["orders"]>
   composites: {}
 }
@@ -1442,6 +1645,7 @@ export interface Prisma__ordersClient<T, Null = never, ExtArgs extends runtime.T
   restaurants<T extends Prisma.restaurantsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.restaurantsDefaultArgs<ExtArgs>>): Prisma.Prisma__restaurantsClient<runtime.Types.Result.GetResult<Prisma.$restaurantsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   restaurant_tables<T extends Prisma.restaurant_tablesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.restaurant_tablesDefaultArgs<ExtArgs>>): Prisma.Prisma__restaurant_tablesClient<runtime.Types.Result.GetResult<Prisma.$restaurant_tablesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   invoices<T extends Prisma.orders$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.orders$invoicesArgs<ExtArgs>>): Prisma.Prisma__invoicesClient<runtime.Types.Result.GetResult<Prisma.$invoicesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  table_sessions<T extends Prisma.table_sessionsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.table_sessionsDefaultArgs<ExtArgs>>): Prisma.Prisma__table_sessionsClient<runtime.Types.Result.GetResult<Prisma.$table_sessionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1480,6 +1684,7 @@ export interface ordersFieldRefs {
   readonly status: Prisma.FieldRef<"orders", 'orders_status'>
   readonly created_at: Prisma.FieldRef<"orders", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"orders", 'DateTime'>
+  readonly session_id: Prisma.FieldRef<"orders", 'BigInt'>
 }
     
 

@@ -62,6 +62,7 @@ export const ModelName = {
   restaurant_tables: 'restaurant_tables',
   restaurants: 'restaurants',
   table_qr_codes: 'table_qr_codes',
+  table_sessions: 'table_sessions',
   users: 'users'
 } as const
 
@@ -158,7 +159,8 @@ export const OrdersScalarFieldEnum = {
   note: 'note',
   status: 'status',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  session_id: 'session_id'
 } as const
 
 export type OrdersScalarFieldEnum = (typeof OrdersScalarFieldEnum)[keyof typeof OrdersScalarFieldEnum]
@@ -242,6 +244,17 @@ export const Table_qr_codesScalarFieldEnum = {
 } as const
 
 export type Table_qr_codesScalarFieldEnum = (typeof Table_qr_codesScalarFieldEnum)[keyof typeof Table_qr_codesScalarFieldEnum]
+
+
+export const Table_sessionsScalarFieldEnum = {
+  id: 'id',
+  table_id: 'table_id',
+  status: 'status',
+  opened_at: 'opened_at',
+  closed_at: 'closed_at'
+} as const
+
+export type Table_sessionsScalarFieldEnum = (typeof Table_sessionsScalarFieldEnum)[keyof typeof Table_sessionsScalarFieldEnum]
 
 
 export const UsersScalarFieldEnum = {

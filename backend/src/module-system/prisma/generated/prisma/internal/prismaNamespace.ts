@@ -408,6 +408,7 @@ export const ModelName = {
   restaurant_tables: 'restaurant_tables',
   restaurants: 'restaurants',
   table_qr_codes: 'table_qr_codes',
+  table_sessions: 'table_sessions',
   users: 'users'
 } as const
 
@@ -424,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "categories" | "foods" | "invoices" | "order_items" | "orders" | "payments" | "refresh_tokens" | "restaurant_members" | "restaurant_tables" | "restaurants" | "table_qr_codes" | "users"
+    modelProps: "categories" | "foods" | "invoices" | "order_items" | "orders" | "payments" | "refresh_tokens" | "restaurant_members" | "restaurant_tables" | "restaurants" | "table_qr_codes" | "table_sessions" | "users"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1154,6 +1155,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    table_sessions: {
+      payload: Prisma.$table_sessionsPayload<ExtArgs>
+      fields: Prisma.table_sessionsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.table_sessionsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$table_sessionsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.table_sessionsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$table_sessionsPayload>
+        }
+        findFirst: {
+          args: Prisma.table_sessionsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$table_sessionsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.table_sessionsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$table_sessionsPayload>
+        }
+        findMany: {
+          args: Prisma.table_sessionsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$table_sessionsPayload>[]
+        }
+        create: {
+          args: Prisma.table_sessionsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$table_sessionsPayload>
+        }
+        createMany: {
+          args: Prisma.table_sessionsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.table_sessionsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$table_sessionsPayload>
+        }
+        update: {
+          args: Prisma.table_sessionsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$table_sessionsPayload>
+        }
+        deleteMany: {
+          args: Prisma.table_sessionsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.table_sessionsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.table_sessionsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$table_sessionsPayload>
+        }
+        aggregate: {
+          args: Prisma.Table_sessionsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTable_sessions>
+        }
+        groupBy: {
+          args: Prisma.table_sessionsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Table_sessionsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.table_sessionsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Table_sessionsCountAggregateOutputType> | number
+        }
+      }
+    }
     users: {
       payload: Prisma.$usersPayload<ExtArgs>
       fields: Prisma.usersFieldRefs
@@ -1336,7 +1403,8 @@ export const OrdersScalarFieldEnum = {
   note: 'note',
   status: 'status',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  session_id: 'session_id'
 } as const
 
 export type OrdersScalarFieldEnum = (typeof OrdersScalarFieldEnum)[keyof typeof OrdersScalarFieldEnum]
@@ -1420,6 +1488,17 @@ export const Table_qr_codesScalarFieldEnum = {
 } as const
 
 export type Table_qr_codesScalarFieldEnum = (typeof Table_qr_codesScalarFieldEnum)[keyof typeof Table_qr_codesScalarFieldEnum]
+
+
+export const Table_sessionsScalarFieldEnum = {
+  id: 'id',
+  table_id: 'table_id',
+  status: 'status',
+  opened_at: 'opened_at',
+  closed_at: 'closed_at'
+} as const
+
+export type Table_sessionsScalarFieldEnum = (typeof Table_sessionsScalarFieldEnum)[keyof typeof Table_sessionsScalarFieldEnum]
 
 
 export const UsersScalarFieldEnum = {
@@ -1671,6 +1750,13 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'table_sessions_status'
+ */
+export type Enumtable_sessions_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'table_sessions_status'>
+    
+
+
+/**
  * Reference to a field of type 'users_status'
  */
 export type Enumusers_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'users_status'>
@@ -1845,6 +1931,7 @@ export type GlobalOmitConfig = {
   restaurant_tables?: Prisma.restaurant_tablesOmit
   restaurants?: Prisma.restaurantsOmit
   table_qr_codes?: Prisma.table_qr_codesOmit
+  table_sessions?: Prisma.table_sessionsOmit
   users?: Prisma.usersOmit
 }
 

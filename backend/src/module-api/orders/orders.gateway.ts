@@ -113,8 +113,7 @@ export class OrderGateway {
     }
 
 
-    const room =
-      `restaurant:${restaurantId.toString()}`;
+    const room = `restaurant:${restaurantId.toString()}`;
 
 
     await client.join(room);
@@ -140,7 +139,8 @@ export class OrderGateway {
       ...order,
       id: order.id.toString(),
       restaurant_id: order.restaurant_id.toString(),
-      table_id: order.table_id.toString()
+      table_id: order.table_id.toString(),
+      session_id: order.session_id.toString(),
     };
     this.server
       .to(room)
@@ -162,7 +162,8 @@ export class OrderGateway {
       ...order,
       id: order.id.toString(),
       restaurant_id: order.restaurant_id.toString(),
-      table_id: order.table_id.toString()
+      table_id: order.table_id.toString(),
+      session_id: order.session_id.toString()
     };
     this.server
       .to(room)

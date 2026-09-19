@@ -443,6 +443,23 @@ export type BoolWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedBoolFilter<$PrismaModel>
 }
 
+export type Enumtable_sessions_statusFilter<$PrismaModel = never> = {
+  equals?: $Enums.table_sessions_status | Prisma.Enumtable_sessions_statusFieldRefInput<$PrismaModel>
+  in?: $Enums.table_sessions_status[]
+  notIn?: $Enums.table_sessions_status[]
+  not?: Prisma.NestedEnumtable_sessions_statusFilter<$PrismaModel> | $Enums.table_sessions_status
+}
+
+export type Enumtable_sessions_statusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.table_sessions_status | Prisma.Enumtable_sessions_statusFieldRefInput<$PrismaModel>
+  in?: $Enums.table_sessions_status[]
+  notIn?: $Enums.table_sessions_status[]
+  not?: Prisma.NestedEnumtable_sessions_statusWithAggregatesFilter<$PrismaModel> | $Enums.table_sessions_status
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumtable_sessions_statusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumtable_sessions_statusFilter<$PrismaModel>
+}
+
 export type Enumusers_statusFilter<$PrismaModel = never> = {
   equals?: $Enums.users_status | Prisma.Enumusers_statusFieldRefInput<$PrismaModel>
   in?: $Enums.users_status[]
@@ -915,6 +932,23 @@ export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedBoolFilter<$PrismaModel>
   _max?: Prisma.NestedBoolFilter<$PrismaModel>
+}
+
+export type NestedEnumtable_sessions_statusFilter<$PrismaModel = never> = {
+  equals?: $Enums.table_sessions_status | Prisma.Enumtable_sessions_statusFieldRefInput<$PrismaModel>
+  in?: $Enums.table_sessions_status[]
+  notIn?: $Enums.table_sessions_status[]
+  not?: Prisma.NestedEnumtable_sessions_statusFilter<$PrismaModel> | $Enums.table_sessions_status
+}
+
+export type NestedEnumtable_sessions_statusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.table_sessions_status | Prisma.Enumtable_sessions_statusFieldRefInput<$PrismaModel>
+  in?: $Enums.table_sessions_status[]
+  notIn?: $Enums.table_sessions_status[]
+  not?: Prisma.NestedEnumtable_sessions_statusWithAggregatesFilter<$PrismaModel> | $Enums.table_sessions_status
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumtable_sessions_statusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumtable_sessions_statusFilter<$PrismaModel>
 }
 
 export type NestedEnumusers_statusFilter<$PrismaModel = never> = {

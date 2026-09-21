@@ -161,4 +161,111 @@ export class OrdersService {
       status: res.status
     }
   }
+
+  async getOrderForCustomers(token: string) {
+    const checkToken = await this.prisma.table_qr_codes.findFirst({
+      where: {
+        token: token
+      }
+    });
+    if (!checkToken) {
+      throw new BadRequestException("token not found");
+    }
+
+    if (checkToken.expires_at && checkToken.expires_at < new Date()) {
+      throw new BadRequestException('QR code expired');
+    }
+
+    const tableId = checkToken.table_id.toString();
+
+    const checkSess = await this.prisma.table_sessions.findFirst({
+      where: {
+        table_id: BigInt(tableId),
+        status: "ACTIVE"
+      }
+    })
+
+    if (!checkSess) {
+      return {
+        session_id: null,
+        orders: []
+      }
+    }
+
+    const res = await this.prisma.orders.findMany({
+      where: {
+        session_id: checkSess.id
+      },
+      include: {
+        order_items: true
+      },
+      orderBy: {
+        created_at: "asc"
+      }
+    })
+
+    const result = {
+      session_id: checkSess.id.toString(),
+      table_id: tableId.toString(),
+      orders: res.map((order) => ({
+        id: order.id.toString(),
+        restaurant_id: order.restaurant_id.toString(),
+        table_id: order.table_id.toString(),
+        session_id: order.session_id.toString(),
+        order_code: order.order_code,
+        note: order.note,
+        status: order.status,
+
+        order_items: order.order_items.map((item) => ({
+          ...item,
+          id: item.id.toString(),
+          order_id: item.order_id.toString(),
+          food_id: item.food_id.toString(),
+        })),
+      })),
+    };
+
+    return result;
+  }
+
+  async getAllOrder(restuarntId: string) {
+    const checkRes = await this.prisma.restaurants.findFirst({
+      where: {
+        id: BigInt(restuarntId),
+      }
+    })
+
+    if (!checkRes) {
+      throw new BadRequestException("restaurant not found")
+    }
+
+    const res = await this.prisma.orders.findMany({
+      where: {
+        restaurant_id: checkRes.id
+      },
+      include: {
+        order_items: true
+      }
+    })
+
+    const result = {
+      orders: res.map((order) => ({
+        id: order.id.toString(),
+        restaurant_id: order.restaurant_id.toString(),
+        table_id: order.table_id.toString(),
+        session_id: order.session_id.toString(),
+        order_code: order.order_code,
+        note: order.note,
+        status: order.status,
+
+        order_items: order.order_items.map((item) => ({
+          ...item,
+          id: item.id.toString(),
+          order_id: item.order_id.toString(),
+          food_id: item.food_id.toString(),
+        })),
+      }))
+    };
+    return result;
+  }
 }

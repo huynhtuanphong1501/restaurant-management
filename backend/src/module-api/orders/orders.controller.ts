@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, Query } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/createOrder.dto';
 import { Public } from 'src/common/decorators/public.decorator';
@@ -32,8 +32,24 @@ export class OrdersController {
     }
   }
 
-  // @Get(':restaurantId/orders')
+  @Public()
+  @Get(':restaurantId/orders')
+  async getOrderForCustomers(@Query('token') token: string) {
+    const result = await this.ordersService.getOrderForCustomers(token);
+    return {
+      result: result,
+      message: "get order for customers"
+    }
+  }
   
 
-  // @Get(':restaurantId/orders/:orderId')
+  @Get(':restaurantId/orders')
+  @Roles(Role.ADMIN, Role.MANAGER, Role.OWNER)
+  async getAllOrder(@Param("restaurantId") restaurantId: string) {
+    const result = await this.ordersService.getAllOrder(restaurantId);
+    return {
+      result: result,
+      message: "get all orders"
+    }
+  }
 }

@@ -19,9 +19,10 @@ import { QrModule } from './module-api/qr/qr.module';
 import { MenuModule } from './module-api/menu/menu.module';
 import { OrdersModule } from './module-api/orders/orders.module';
 import { InvoicesModule } from './module-api/invoices/invoices.module';
+import { PaymentsModule } from './module-api/payments/payments.module';
 
 @Module({
-  imports: [PrismaModule, UserModule, TokenModule, CloudinaryModule, RestaurantModule, RestaurantMemberModule, CatagoryModule, FoodsModule, RestaurantTableModule, QrModule, MenuModule, OrdersModule, InvoicesModule],
+  imports: [PrismaModule, UserModule, TokenModule, CloudinaryModule, RestaurantModule, RestaurantMemberModule, CatagoryModule, FoodsModule, RestaurantTableModule, QrModule, MenuModule, OrdersModule, InvoicesModule, PaymentsModule],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_GUARD,
